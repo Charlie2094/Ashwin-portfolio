@@ -519,19 +519,19 @@
   <div class="hero-inner">
     <div class="hero-badge">Open to Opportunities</div>
     <h1>Ashwin Gopal<span>.</span></h1>
-    <p class="hero-sub">Senior Automation Developer specialising in end-to-end workflow automation, intelligent process design, and enterprise integration solutions.</p>
+    <p class="hero-sub">Senior Automation Developer specialising in end-to-end workflow automation, AI-powered systems, intelligent process design, and enterprise integration solutions.</p>
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num">7<span>+</span></div>
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="stat">
-        <div class="stat-num">90<span>%</span></div>
-        <div class="stat-label">Reporting Time Saved</div>
+        <div class="stat-num">113<span>k</span></div>
+        <div class="stat-label">Hrs/yr Saved</div>
       </div>
       <div class="stat">
-        <div class="stat-num">3<span>+</span></div>
-        <div class="stat-label">Automation Platforms</div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">AI Projects Live</div>
       </div>
       <div class="stat">
         <div class="stat-num">50<span>%</span></div>
@@ -552,66 +552,89 @@
 
   <div class="projects-grid">
 
-    <!-- Featured Card -->
+    <!-- Featured Card 1 — AutoRequest Pro -->
     <div class="project-card featured">
       <div class="project-top">
         <div>
-          <div class="project-icon icon-blue">⚖️</div>
+          <div class="project-icon icon-purple">⚡</div>
         </div>
+        <div class="project-impact">✅ Live in Production</div>
+      </div>
+      <div class="project-title">AutoRequest Pro — AI-Powered Automation Request Platform</div>
+      <div class="project-desc">A production-grade internal platform built for WPP Production — enabling teams to submit automation requests via a 3-step wizard, auto-calculate ROI, receive AI-generated acknowledgement emails via a custom LLaMA 3 connector, and collaborate via a brainstorming space. Currently managing 46+ requests and tracking 113,887 hrs/yr in projected savings.</div>
+      <div class="psr">
+        <div class="psr-item">
+          <div class="psr-label problem">Problem</div>
+          <div class="psr-text">No structured way to capture, prioritise, or track automation requests across teams — all manual and ad-hoc.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label solution">Solution</div>
+          <div class="psr-text">Built a full Power Platform app with ROI calculator, AI email acknowledgement via custom Groq/LLaMA 3 connector, SharePoint memory, and brainstorming space.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label result">Result</div>
+          <div class="psr-text">46+ requests tracked · 113,887 hrs/yr saved · 14,242 working days reclaimed · 25 brainstorm ideas · 6 contributors.</div>
+        </div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Power Apps Canvas</span>
+        <span class="project-tag">Power Automate</span>
+        <span class="project-tag">LLaMA 3 · Groq</span>
+        <span class="project-tag">Custom Connector</span>
+        <span class="project-tag">SharePoint</span>
+        <span class="project-tag">Chain-of-Thought</span>
+        <span class="project-tag"><a href="https://github.com/Charlie2094/AutoRequest-Pro" target="_blank" style="color:inherit;text-decoration:none;">🐙 GitHub</a></span>
+      </div>
+    </div>
+
+    <!-- Featured Card 2 — Agentic AI -->
+    <div class="project-card featured">
+      <div class="project-top">
+        <div>
+          <div class="project-icon icon-blue">🤖</div>
+        </div>
+        <div class="project-impact">✅ Workshop Project</div>
+      </div>
+      <div class="project-title">Agentic AI Orchestration System</div>
+      <div class="project-desc">Designed and built a multi-agent AI orchestration pipeline as part of an Agentic AI workshop — using Streamlit as the web interface and GitHub for version control and CI/CD. Implemented a ReAct (Reason-Act-Observe) agent loop with multi-step task planning, tool selection, and session memory. The system autonomously reasons, selects tools, executes actions, and iterates until task completion.</div>
+      <div class="psr">
+        <div class="psr-item">
+          <div class="psr-label problem">Problem</div>
+          <div class="psr-text">Single-turn AI responses can't handle complex, multi-step tasks that require planning, tool use, and iteration.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label solution">Solution</div>
+          <div class="psr-text">Built a ReAct agent loop — Reason → Act → Observe cycle with tool routing (search, code exec, file I/O, APIs) orchestrated via GitHub + Streamlit.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label result">Result</div>
+          <div class="psr-text">A working agentic pipeline that autonomously completes multi-step tasks — demonstrated during Agentic AI workshop.</div>
+        </div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Streamlit</span>
+        <span class="project-tag">GitHub Actions</span>
+        <span class="project-tag">ReAct Pattern</span>
+        <span class="project-tag">Agent Orchestration</span>
+        <span class="project-tag">Tool Use</span>
+        <span class="project-tag">LLM</span>
+      </div>
+    </div>
+
+    <!-- Card 3 — Queue Manager -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-blue">⚖️</div>
         <div class="project-impact">⚡ ~90% Time Saved</div>
       </div>
       <div class="project-title">Queue Manager & Load Balancer</div>
       <div class="project-desc">Identified a critical job distribution bottleneck in the production pipeline and engineered a weighted round-robin Queue Manager and Load Balancer — improving throughput, system stability, and peak-period performance across teams.</div>
-      <div class="psr">
-        <div class="psr-item">
-          <div class="psr-label problem">Problem</div>
-          <div class="psr-text">Jobs piling unevenly across nodes, causing delays and system instability during peak hours.</div>
-        </div>
-        <div class="psr-item">
-          <div class="psr-label solution">Solution</div>
-          <div class="psr-text">Built a weighted round-robin Queue Manager with dynamic load distribution logic using custom scripting.</div>
-        </div>
-        <div class="psr-item">
-          <div class="psr-label result">Result</div>
-          <div class="psr-text">Consistent job throughput, fewer system failures, and measurable improvement in production speed.</div>
-        </div>
-      </div>
       <div class="project-tags">
         <span class="project-tag">Enfocus Switch</span>
         <span class="project-tag">JavaScript</span>
         <span class="project-tag">Workflow Design</span>
         <span class="project-tag">Load Balancing</span>
-      </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon icon-purple">📊</div>
-        <div class="project-impact">⚡ 90% Faster</div>
-      </div>
-      <div class="project-title">Automated Excel Report Pipeline</div>
-      <div class="project-desc">Transformed a multi-day manual report preparation process into a fully automated scripting solution — compressing days of analyst work into minutes through intelligent Excel automation.</div>
-      <div class="project-tags">
-        <span class="project-tag">Excel Scripting</span>
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Process Automation</span>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon icon-green">📱</div>
-        <div class="project-impact">✅ Live in Production</div>
-      </div>
-      <div class="project-title">Power Apps Intake & Tracking System</div>
-      <div class="project-desc">Scoped and delivered a full Power Platform solution — Canvas Apps UI, SharePoint data layer, Power Automate approval flows, admin controls, and feedback capture — adopted across teams for intake and tracking.</div>
-      <div class="project-tags">
-        <span class="project-tag">Power Apps</span>
-        <span class="project-tag">SharePoint</span>
-        <span class="project-tag">Power Automate</span>
-        <span class="project-tag">Canvas Apps</span>
       </div>
     </div>
 
@@ -709,7 +732,21 @@
   <div class="skills-grid">
 
     <div class="skill-card">
-      <h4>⚙️ Languages & Scripting</h4>
+      <h4>🧠 AI &amp; Agentic Systems</h4>
+      <div class="tags">
+        <span class="tag">LLaMA 3</span>
+        <span class="tag">Groq API</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">Chain-of-Thought</span>
+        <span class="tag">ReAct Pattern</span>
+        <span class="tag">Agentic AI</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Custom Connectors</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>⚙️ Languages &amp; Scripting</h4>
       <div class="tags">
         <span class="tag">Python</span>
         <span class="tag">TypeScript</span>
@@ -833,7 +870,7 @@
     <div class="cert-card">
       <div class="cert-icon">🤖</div>
       <div>
-        <div class="cert-name">Essential Automation Anywhere Certification</div>
+        <div class="cert-name"><a href="https://certificates.automationanywhere.com/6fa54423-1dc8-4388-9a3f-8c68b75ed447#acc.SLeC8Upx" target="_blank" style="color:inherit; text-decoration:none;">Essential Automation Anywhere Certification ↗</a></div>
         <div class="cert-issuer">Automation Anywhere</div>
         <div class="cert-date">May 2025</div>
       </div>
@@ -842,7 +879,7 @@
     <div class="cert-card">
       <div class="cert-icon">📊</div>
       <div>
-        <div class="cert-name">Business Analyst Badge</div>
+        <div class="cert-name"><a href="https://certificates.automationanywhere.com/0dd46f88-5c8e-486c-8e31-5b27890a576b#acc.epcOzvP4" target="_blank" style="color:inherit; text-decoration:none;">Business Analyst Badge ↗</a></div>
         <div class="cert-issuer">Automation Anywhere</div>
         <div class="cert-date">Apr 2025</div>
       </div>
@@ -851,7 +888,7 @@
     <div class="cert-card">
       <div class="cert-icon">📁</div>
       <div>
-        <div class="cert-name">Google Project Management Certificate</div>
+        <div class="cert-name"><a href="https://www.coursera.org/account/accomplishments/professional-cert/HVBHYVZ4Y83R" target="_blank" style="color:inherit; text-decoration:none;">Google Project Management Certificate ↗</a></div>
         <div class="cert-issuer">Google · Coursera</div>
         <div class="cert-date">Mar 2023</div>
       </div>
