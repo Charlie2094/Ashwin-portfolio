@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AutoRequest Pro · Power Automate Flow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0d0d1a;
+    --surface:   #13132a;
+    --border:    rgba(255,255,255,0.08);
+    --text:      #f1f5f9;
+    --muted:     rgba(255,255,255,0.4);
+    --blue:      #3b82f6;
+    --green:     #10b981;
+    --purple:    #8b5cf6;
+    --amber:     #f59e0b;
+    --pink:      #ec4899;
+    --cyan:      #06b6d4;
+    --red:       #ef4444;
+    --highlight: #e94560;
+    --orange:    #f97316;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    padding: 48px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(233,69,96,0.2);
+    border: 1px solid rgba(233,69,96,0.35);
+    color: #ff7d94;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-size: 32px; font-weight: 800;
+    letter-spacing: -1px; margin-bottom: 6px;
+  }
+  .header p { font-size: 14px; color: var(--muted); }
+  .wpp-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 12px; color: var(--muted);
+    font-weight: 500;
+  }
+  .wpp-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+  /* ── CANVAS ── */
+  .canvas {
+    max-width: 980px;
+    margin: 48px auto 0;
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── PHASE LABEL ── */
+  .phase-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 10px;
+  }
+  .phase-label {
+    font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 2px;
+    white-space: nowrap;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+  .phase-line { flex: 1; height: 1px; background: var(--border); }
+  .phase-live   { background: rgba(16,185,129,0.15);  color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+  .phase-dev    { background: rgba(245,158,11,0.15);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); border-style: dashed; }
+  .phase-future { background: rgba(139,92,246,0.12);  color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); border-style: dashed; }
+
+  /* ── NODE ── */
+  .node-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .node {
+    width: 100%;
+    max-width: 620px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  /* node colours */
+  .n-blue   { background: rgba(59,130,246,0.08);  border-color: rgba(59,130,246,0.25); }
+  .n-green  { background: rgba(16,185,129,0.08);  border-color: rgba(16,185,129,0.25); }
+  .n-purple { background: rgba(139,92,246,0.08);  border-color: rgba(139,92,246,0.25); }
+  .n-amber  { background: rgba(245,158,11,0.08);  border-color: rgba(245,158,11,0.25); }
+  .n-pink   { background: rgba(236,72,153,0.08);  border-color: rgba(236,72,153,0.25); }
+  .n-cyan   { background: rgba(6,182,212,0.08);   border-color: rgba(6,182,212,0.25); }
+  .n-red    { background: rgba(239,68,68,0.08);   border-color: rgba(239,68,68,0.25); }
+  .n-orange { background: rgba(249,115,22,0.08);  border-color: rgba(249,115,22,0.25); }
+  .n-hl     { background: rgba(233,69,96,0.10);   border-color: rgba(233,69,96,0.35); }
+
+  /* dashed = in-dev */
+  .n-dashed { border-style: dashed !important; opacity: 0.85; }
+
+  .node-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .ic-blue   { background: rgba(59,130,246,0.18); }
+  .ic-green  { background: rgba(16,185,129,0.18); }
+  .ic-purple { background: rgba(139,92,246,0.18); }
+  .ic-amber  { background: rgba(245,158,11,0.18); }
+  .ic-pink   { background: rgba(236,72,153,0.18); }
+  .ic-cyan   { background: rgba(6,182,212,0.18);  }
+  .ic-red    { background: rgba(239,68,68,0.18);  }
+  .ic-orange { background: rgba(249,115,22,0.18); }
+  .ic-hl     { background: rgba(233,69,96,0.2);   }
+
+  .node-body { flex: 1; }
+  .node-step {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--muted); margin-bottom: 3px;
+  }
+  .node-title {
+    font-size: 15px; font-weight: 700;
+    color: var(--text); line-height: 1.3;
+    margin-bottom: 5px;
+  }
+  .node-desc {
+    font-size: 12.5px; color: var(--muted);
+    line-height: 1.6;
+  }
+  .node-tags {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    margin-top: 10px;
+  }
+  .ntag {
+    font-size: 11px; font-weight: 500;
+    padding: 2px 9px; border-radius: 20px;
+    font-family: 'Fira Code', monospace;
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* status badge */
+  .node-status {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 10px; border-radius: 12px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .st-live   { background: rgba(16,185,129,0.15); color: #10b981; }
+  .st-dev    { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .st-future { background: rgba(139,92,246,0.15); color: #a78bfa; }
+
+  /* ── CONNECTOR ── */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 0;
+    position: relative;
+    z-index: 1;
+  }
+  .conn-line {
+    width: 2px; height: 32px;
+    background: linear-gradient(to bottom,
+      rgba(255,255,255,0.15),
+      rgba(255,255,255,0.4));
+  }
+  .conn-arrow {
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    line-height: 1;
+  }
+  .conn-label {
+    font-size: 10.5px; color: var(--muted);
+    font-family: 'Fira Code', monospace;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 2px 10px; border-radius: 10px;
+    white-space: nowrap;
+    margin: 2px 0;
+  }
+
+  /* ── BRANCH (parallel nodes) ── */
+  .branch {
+    display: flex;
+    width: 100%;
+    max-width: 820px;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .branch .node { max-width: none; flex: 1; }
+  .branch-connector {
+    display: flex; flex-direction: column; align-items: center;
+    width: 100%; max-width: 820px;
+    padding: 4px 0;
+  }
+  .branch-lines {
+    display: flex;
+    width: 100%; max-width: 820px;
+    justify-content: center;
+    position: relative;
+    height: 36px;
+  }
+  /* horizontal bar */
+  .branch-lines::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 25%; right: 25%;
+    height: 2px;
+    background: linear-gradient(to right,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.3),
+      rgba(255,255,255,0.05));
+  }
+  /* left drop */
+  .branch-lines::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    width: 2px; height: 100%;
+    background: rgba(255,255,255,0.2);
+    transform: translateX(-50%);
+  }
+  .branch-drop-left {
+    position: absolute; top: 0; left: 25%;
+    width: 2px; height: 100%;
+    background: rgba(255,255,255,0.2);
+    transform: translateX(-50%);
+  }
+  .branch-drop-right {
+    position: absolute; top: 0; right: 25%;
+    width: 2px; height: 100%;
+    background: rgba(255,255,255,0.2);
+    transform: translateX(50%);
+  }
+
+  /* ── DECISION DIAMOND ── */
+  .decision-wrap {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .decision {
+    width: 160px; height: 64px;
+    background: rgba(245,158,11,0.1);
+    border: 2px dashed rgba(245,158,11,0.4);
+    transform: rotate(0deg);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 8px 16px;
+    position: relative;
+  }
+  .decision-icon { font-size: 18px; }
+  .decision-title { font-size: 12px; font-weight: 700; color: #fbbf24; }
+
+  /* ── NOTE BOX ── */
+  .note {
+    max-width: 620px; width: 100%;
+    background: rgba(245,158,11,0.07);
+    border: 1px dashed rgba(245,158,11,0.3);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 12.5px; color: rgba(245,158,11,0.8);
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-top: 4px;
+  }
+  .note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── LEGEND ── */
+  .legend {
+    max-width: 620px; width: 100%;
+    margin-top: 40px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+  }
+  .legend-title {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  .legend-items { display: flex; flex-wrap: wrap; gap: 14px; }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--muted);
+  }
+  .l-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .l-line-solid {
+    width: 24px; height: 2px;
+    background: rgba(255,255,255,0.4);
+  }
+  .l-line-dash {
+    width: 24px; height: 2px;
+    background: repeating-linear-gradient(to right,
+      rgba(245,158,11,0.6) 0, rgba(245,158,11,0.6) 4px,
+      transparent 4px, transparent 8px);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>AutoRequest Pro</h1>
+  <p>End-to-end automation request flow — from submission to JIRA ticket</p>
+  <div class="wpp-badge">
+    <div class="wpp-dot"></div>
+    WPP Production · AutoRequest Pro v1.0 · Ashwin Gopal
+  </div>
+</div>
+
+<!-- CANVAS -->
+<div class="canvas">
+
+  <!-- ════ PHASE 1: LIVE ════ -->
+  <div class="phase-wrap">
+    <div class="phase-label phase-live">✅ Phase 1 — Live</div>
+    <div class="phase-line"></div>
+  </div>
+
+  <!-- Step 1: Power Apps -->
+  <div class="node-wrap">
+    <div class="node n-blue">
+      <div class="node-status st-live">Live</div>
+      <div class="node-icon-wrap ic-blue">📱</div>
+      <div class="node-body">
+        <div class="node-step">Step 1 · Trigger</div>
+        <div class="node-title">User Submits Request via Power Apps</div>
+        <div class="node-desc">User completes the 3-step wizard in AutoRequest Pro Canvas App — Requester info, Tool details, and Business impact. On submit, the Power Automate flow is triggered instantly.</div>
+        <div class="node-tags">
+          <span class="ntag">Power Apps Canvas</span>
+          <span class="ntag">3-step wizard</span>
+          <span class="ntag">ROI auto-calc</span>
+          <span class="ntag">Trigger: On Submit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">form data payload</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- Step 2: SharePoint Save -->
+  <div class="node-wrap">
+    <div class="node n-amber">
+      <div class="node-status st-live">Live</div>
+      <div class="node-icon-wrap ic-amber">📋</div>
+      <div class="node-body">
+        <div class="node-step">Step 2 · Storage</div>
+        <div class="node-title">Save Request to SharePoint</div>
+        <div class="node-desc">Power Automate saves the full submission — requester info, tool details, ROI data, priority, and any attached assets — into the SharePoint AutoRequest list as a new item.</div>
+        <div class="node-tags">
+          <span class="ntag">SharePoint List</span>
+          <span class="ntag">Create item</span>
+          <span class="ntag">Asset upload</span>
+          <span class="ntag">Request ID generated</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">request saved → trigger AI</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- Step 3: Custom Connector + AI Ack -->
+  <div class="node-wrap">
+    <div class="node n-hl">
+      <div class="node-status st-live">Live</div>
+      <div class="node-icon-wrap ic-hl">🤖</div>
+      <div class="node-body">
+        <div class="node-step">Step 3 · AI Engine</div>
+        <div class="node-title">Custom Connector → AI Email Acknowledgement</div>
+        <div class="node-desc">Power Automate calls the <strong style="color:white;">Custom Connector</strong> built to interface with the AI Email Assistant (LLaMA 3.8B Instant). The connector passes the submission context and generates a personalised acknowledgement email — confirming receipt, summarising the request, and setting expectations.</div>
+        <div class="node-tags">
+          <span class="ntag">Custom Connector</span>
+          <span class="ntag">LLaMA 3.8B Instant</span>
+          <span class="ntag">Chain-of-Thought</span>
+          <span class="ntag">Dynamic email body</span>
+          <span class="ntag">SharePoint context</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">AI-generated email</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- Step 4: Send Email -->
+  <div class="node-wrap">
+    <div class="node n-cyan">
+      <div class="node-status st-live">Live</div>
+      <div class="node-icon-wrap ic-cyan">✉️</div>
+      <div class="node-body">
+        <div class="node-step">Step 4 · Notification</div>
+        <div class="node-title">Send Acknowledgement Email to User</div>
+        <div class="node-desc">Power Automate sends the AI-generated acknowledgement email to the requester via the Office 365 Outlook connector. Email includes request ID, summary, priority recommendation, and estimated review timeline.</div>
+        <div class="node-tags">
+          <span class="ntag">Office 365 Outlook</span>
+          <span class="ntag">Send email action</span>
+          <span class="ntag">Request ID in subject</span>
+          <span class="ntag">AI personalised body</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PHASE 2: IN DEV ════ -->
+  <div class="phase-wrap">
+    <div class="phase-label phase-dev">🔧 Phase 2 — In Development</div>
+    <div class="phase-line"></div>
+  </div>
+
+  <div class="connector">
+    <div class="conn-line"></div>
+    <div class="conn-label">route to approval queue</div>
+    <div class="conn-line"></div>
+    <div class="conn-arrow">▼</div>
+  </div>
+
+  <!-- Step 5: Approval -->
+  <div class="node-wrap">
+    <div class="node n-orange n-dashed">
+      <div class="node-status st-dev">In Dev</div>
+      <div class="node-icon-wrap ic-orange">✅</div>
+      <div class="node-body">
+        <div class="node-step">Step 5 · Human Gate</div>
+        <div class="node-title">Approval System</div>
+        <div class="node-desc">A Power Automate approval flow routes the request to the designated approver(s). Approver receives a structured summary email with Accept / Reject actions. On rejection, the requester is notified with a reason and the request returns to draft state.</div>
+        <div class="node-tags">
+          <span class="ntag">Approvals connector</span>
+          <span class="ntag">Start and wait for approval</span>
+          <span class="ntag">Approver notification</span>
+          <span class="ntag">Reject → notify user</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">approved → proceed</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- Step 6: AI Debrief -->
+  <div class="node-wrap">
+    <div class="node n-purple n-dashed">
+      <div class="node-status st-dev">In Dev</div>
+      <div class="node-icon-wrap ic-purple">🧠</div>
+      <div class="node-body">
+        <div class="node-step">Step 6 · AI Processing</div>
+        <div class="node-title">AI Debriefing — Structure Request for JIRA</div>
+        <div class="node-desc">Once approved, the Custom Connector calls the AI again to <strong style="color:white;">debrief and structure</strong> the free-text request into a clean, JIRA-ready format — extracting title, description, acceptance criteria, priority, labels, and story points from the user's submission.</div>
+        <div class="node-tags">
+          <span class="ntag">Custom Connector</span>
+          <span class="ntag">LLaMA 3.8B Instant</span>
+          <span class="ntag">Structured output</span>
+          <span class="ntag">JIRA field mapping</span>
+          <span class="ntag">JSON response</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">structured ticket data</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- ════ PHASE 3: FUTURE ════ -->
+  <div class="phase-wrap">
+    <div class="phase-label phase-future">🔮 Phase 3 — Planned</div>
+    <div class="phase-line"></div>
+  </div>
+
+  <!-- Step 7: JIRA -->
+  <div class="node-wrap">
+    <div class="node n-blue n-dashed">
+      <div class="node-status st-future">Planned</div>
+      <div class="node-icon-wrap ic-blue">🎯</div>
+      <div class="node-body">
+        <div class="node-step">Step 7 · Integration</div>
+        <div class="node-title">Create JIRA Ticket</div>
+        <div class="node-desc">Power Automate uses the JIRA connector (or HTTP REST API) to create a new ticket in the designated project — using the AI-structured fields: summary, description, acceptance criteria, priority, assignee, labels, and story points auto-populated.</div>
+        <div class="node-tags">
+          <span class="ntag">JIRA connector</span>
+          <span class="ntag">Create issue</span>
+          <span class="ntag">AI-mapped fields</span>
+          <span class="ntag">Priority auto-set</span>
+          <span class="ntag">Ticket ID returned</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">ticket ID + attach assets</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- Step 8: Assets to JIRA -->
+  <div class="node-wrap">
+    <div class="node n-green n-dashed">
+      <div class="node-status st-future">Planned</div>
+      <div class="node-icon-wrap ic-green">📎</div>
+      <div class="node-body">
+        <div class="node-step">Step 8 · Asset Sync</div>
+        <div class="node-title">Attach SharePoint Assets to JIRA Ticket</div>
+        <div class="node-desc">All client-shared files stored in SharePoint (uploaded during the request submission) are fetched and attached directly to the JIRA ticket via the JIRA REST API — keeping all assets co-located with the delivery ticket.</div>
+        <div class="node-tags">
+          <span class="ntag">SharePoint Get files</span>
+          <span class="ntag">JIRA REST API</span>
+          <span class="ntag">POST /attachments</span>
+          <span class="ntag">File loop</span>
+          <span class="ntag">Asset co-location</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="conn-line"></div>
+      <div class="conn-label">update request status</div>
+      <div class="conn-line"></div>
+      <div class="conn-arrow">▼</div>
+    </div>
+  </div>
+
+  <!-- Step 9: Final Update -->
+  <div class="node-wrap">
+    <div class="node n-green n-dashed">
+      <div class="node-status st-future">Planned</div>
+      <div class="node-icon-wrap ic-green">🏁</div>
+      <div class="node-body">
+        <div class="node-step">Step 9 · Close Loop</div>
+        <div class="node-title">Update SharePoint + Notify User</div>
+        <div class="node-desc">SharePoint request item is updated with JIRA ticket ID, status changed to "Live", and the user receives a final notification email with their JIRA ticket link — closing the full loop from submission to delivery tracking.</div>
+        <div class="node-tags">
+          <span class="ntag">Update SP item</span>
+          <span class="ntag">Status → Live</span>
+          <span class="ntag">JIRA link in email</span>
+          <span class="ntag">Loop complete</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTE -->
+  <div class="note">
+    <div class="note-icon">⚠️</div>
+    <div>
+      <strong style="color:#fbbf24;">Rejection Path (all phases):</strong>
+      If approval is rejected at Step 5 — Power Automate notifies the requester with the reviewer's reason, updates SharePoint status to "Rejected", and returns the request to draft state for editing and resubmission.
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-title">Legend</div>
+    <div class="legend-items">
+      <div class="legend-item"><div class="l-dot" style="background:#10b981;"></div> Live — in production</div>
+      <div class="legend-item"><div class="l-dot" style="background:#f59e0b;"></div> In Development</div>
+      <div class="legend-item"><div class="l-dot" style="background:#8b5cf6;"></div> Planned (Phase 3)</div>
+      <div class="legend-item"><div class="l-line-solid"></div> Active flow</div>
+      <div class="legend-item"><div class="l-line-dash"></div> In-dev / dashed border</div>
+      <div class="legend-item">🤖 Custom Connector = LLaMA 3.8B AI</div>
+      <div class="legend-item">📋 SharePoint = Memory + Asset Store</div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="margin-top: 36px; font-size: 11.5px; color: var(--muted); text-align:center; line-height:1.8;">
+    WPP Production · AutoRequest Pro v1.0 · Power Automate Flow<br/>
+    Built by <strong style="color:rgba(255,255,255,0.6);">Ashwin Gopal</strong> · Senior Automation Developer · Digital Technology<br/>
+    <a href="https://charlie2094.github.io/Ashwin-portfolio/" style="color:#e94560; text-decoration:none;">charlie2094.github.io/Ashwin-portfolio</a>
+  </div>
+
+</div><!-- /canvas -->
+</body>
+</html>

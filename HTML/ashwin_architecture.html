@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ashwin Gopal · Project Architectures</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary:   #1a1a2e;
+    --accent:    #0f3460;
+    --highlight: #e94560;
+    --green:     #10b981;
+    --blue:      #3b82f6;
+    --purple:    #8b5cf6;
+    --amber:     #f59e0b;
+    --pink:      #ec4899;
+    --cyan:      #06b6d4;
+    --border:    #e2e6ef;
+    --light-bg:  #f8f9fb;
+    --muted:     #6b7280;
+    --text:      #1f2937;
+    --white:     #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0d0d1a;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,13,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    height: 56px;
+  }
+  .nav-logo { font-weight: 800; font-size: 15px; color: white; }
+  .nav-logo span { color: var(--highlight); }
+  .nav-tabs { display: flex; gap: 6px; }
+  .nav-tab {
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 12.5px; font-weight: 600;
+    cursor: pointer; border: none;
+    transition: all 0.2s;
+    background: transparent; color: rgba(255,255,255,0.5);
+  }
+  .nav-tab:hover { color: white; background: rgba(255,255,255,0.08); }
+  .nav-tab.active { background: var(--highlight); color: white; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #1a1a2e 100%);
+    padding: 60px 48px 52px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2.5px;
+    color: var(--highlight); margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 38px; font-weight: 800;
+    letter-spacing: -1px; line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.55); max-width: 560px; margin: 0 auto; }
+
+  /* ── PAGE SECTIONS ── */
+  .page { display: none; padding: 48px; max-width: 1100px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ── SECTION TITLE ── */
+  .section-eyebrow {
+    font-size: 10.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--highlight); margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -0.5px; margin-bottom: 6px;
+  }
+  .section-sub {
+    font-size: 13.5px; color: rgba(255,255,255,0.45);
+    margin-bottom: 36px;
+  }
+
+  /* ── ARCH DIAGRAM ── */
+  .arch-diagram {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 36px;
+    margin-bottom: 32px;
+  }
+
+  /* Flow rows */
+  .flow-row {
+    display: flex; align-items: center;
+    justify-content: center;
+    gap: 0; margin-bottom: 0;
+    flex-wrap: nowrap;
+  }
+  .flow-col {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0;
+  }
+
+  /* Node */
+  .node {
+    border-radius: 14px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 130px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .node-icon { font-size: 24px; margin-bottom: 6px; display: block; }
+  .node-title {
+    font-size: 12px; font-weight: 700;
+    line-height: 1.3; color: white;
+  }
+  .node-sub {
+    font-size: 10.5px; color: rgba(255,255,255,0.5);
+    margin-top: 3px; line-height: 1.3;
+  }
+
+  /* Node colour variants */
+  .node-blue   { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.3); }
+  .node-green  { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.3); }
+  .node-purple { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); }
+  .node-amber  { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.3); }
+  .node-pink   { background: rgba(236,72,153,0.15); border-color: rgba(236,72,153,0.3); }
+  .node-cyan   { background: rgba(6,182,212,0.15);  border-color: rgba(6,182,212,0.3); }
+  .node-red    { background: rgba(239,68,68,0.15);  border-color: rgba(239,68,68,0.3); }
+  .node-highlight { background: rgba(233,69,96,0.2); border-color: rgba(233,69,96,0.5); }
+
+  /* Arrows */
+  .arrow-right {
+    display: flex; align-items: center;
+    padding: 0 6px; flex-shrink: 0;
+  }
+  .arrow-right::after {
+    content: '';
+    display: block;
+    width: 40px; height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0.4));
+    position: relative;
+  }
+  .arrow-right-label {
+    display: flex; flex-direction: column;
+    align-items: center; padding: 0 8px;
+  }
+  .arrow-right-label .arrow-line {
+    width: 50px; height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0.5));
+    position: relative;
+  }
+  .arrow-right-label .arrow-line::after {
+    content: '▶';
+    position: absolute; right: -8px; top: -7px;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+  }
+  .arrow-right-label .arrow-text {
+    font-size: 9.5px; color: rgba(255,255,255,0.35);
+    margin-top: 4px; white-space: nowrap;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .arrow-down {
+    width: 2px; height: 32px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.5));
+    margin: 0 auto;
+    position: relative;
+  }
+  .arrow-down::after {
+    content: '▼';
+    position: absolute; bottom: -12px; left: -5px;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+  }
+
+  .arrow-up {
+    width: 2px; height: 32px;
+    background: linear-gradient(to top, rgba(255,255,255,0.2), rgba(255,255,255,0.5));
+    margin: 0 auto;
+    position: relative;
+  }
+  .arrow-up::after {
+    content: '▲';
+    position: absolute; top: -12px; left: -5px;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+  }
+
+  /* Layer label */
+  .layer-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.25);
+    writing-mode: horizontal-tb;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  /* Divider row */
+  .arch-divider {
+    border: none;
+    border-top: 1px dashed rgba(255,255,255,0.07);
+    margin: 28px 0;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-top: 20px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 11.5px; color: rgba(255,255,255,0.5);
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+
+  /* ── TECH STACK CARDS ── */
+  .stack-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-bottom: 32px;
+  }
+  .stack-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .stack-card:hover { border-color: rgba(255,255,255,0.15); }
+  .stack-card-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .stack-icon { font-size: 20px; }
+  .stack-name { font-size: 13px; font-weight: 700; }
+  .stack-role { font-size: 11.5px; color: rgba(255,255,255,0.4); }
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stack-tag {
+    font-size: 10.5px; font-weight: 500;
+    padding: 2px 9px; border-radius: 20px;
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.6);
+    font-family: 'Fira Code', monospace;
+  }
+
+  /* ── FLOW HIGHLIGHT BOX ── */
+  .flow-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid var(--highlight);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .flow-box strong { color: white; }
+  .flow-box span { color: rgba(255,255,255,0.5); }
+
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--highlight); color: white;
+    font-size: 11px; font-weight: 800;
+    margin-right: 8px; flex-shrink: 0;
+  }
+
+  /* ── GITHUB SECTION ── */
+  .github-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 24px;
+    margin-bottom: 16px;
+  }
+  .github-card h3 {
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .github-card p {
+    font-size: 13px; color: rgba(255,255,255,0.5);
+    margin-bottom: 14px;
+  }
+  .file-tree {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px; padding: 16px;
+    line-height: 2;
+    color: rgba(255,255,255,0.7);
+  }
+  .file-tree .folder { color: #f59e0b; }
+  .file-tree .file   { color: #93c5fd; }
+  .file-tree .comment { color: rgba(255,255,255,0.25); }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 10px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-left: 8px;
+  }
+  .badge-green  { background: rgba(16,185,129,0.2); color: #10b981; }
+  .badge-blue   { background: rgba(59,130,246,0.2); color: #60a5fa; }
+  .badge-purple { background: rgba(139,92,246,0.2); color: #a78bfa; }
+  .badge-amber  { background: rgba(245,158,11,0.2); color: #fbbf24; }
+
+  /* Tooltip on node hover */
+  .node[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: white; font-size: 11px;
+    padding: 5px 10px; border-radius: 6px;
+    white-space: nowrap; z-index: 10;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Ashwin<span>.</span>Architecture</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('power')">⚡ Power Platform AI</button>
+    <button class="nav-tab" onclick="showPage('agentic')">🤖 Agentic AI</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Project Architecture</div>
+  <h1>Ashwin Gopal · AI Projects</h1>
+  <p>Two real-world AI solutions — built, shipped, and production-ready.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 1 — POWER PLATFORM AI
+════════════════════════════════════════ -->
+<div id="page-power" class="page active">
+
+  <div class="section-eyebrow">Project 1</div>
+  <div class="section-title">Power Platform AI Email Assistant</div>
+  <div class="section-sub">Power Apps Canvas · Power Automate · LLaMA 3.8B · SharePoint Memory · Chain-of-Thought</div>
+
+  <!-- ARCHITECTURE DIAGRAM -->
+  <div class="arch-diagram">
+
+    <!-- Row 1: User Layer -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">👤 User Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; margin-bottom: 8px;">
+      <div class="node node-blue" data-tip="Canvas App UI">
+        <span class="node-icon">📱</span>
+        <div class="node-title">Power Apps</div>
+        <div class="node-sub">Canvas App UI</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:28px;"></div>
+    </div>
+    <div style="text-align:center; margin: 4px 0; font-size:10px; color:rgba(255,255,255,0.3); font-family:'Fira Code',monospace;">User submits request</div>
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:20px;"></div>
+    </div>
+
+    <!-- Row 2: Automation Layer -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">⚙️ Automation Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; gap:0; margin-bottom:8px;">
+      <div class="node node-purple" data-tip="Triggers on form submit">
+        <span class="node-icon">⚡</span>
+        <div class="node-title">Power Automate</div>
+        <div class="node-sub">Flow Trigger</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">fetch context</div>
+      </div>
+      <div class="node node-amber" data-tip="Stores conversation history">
+        <span class="node-icon">📋</span>
+        <div class="node-title">SharePoint</div>
+        <div class="node-sub">Memory Store</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">email chain</div>
+      </div>
+      <div class="node node-cyan" data-tip="Previous email context">
+        <span class="node-icon">📧</span>
+        <div class="node-title">Email Chain</div>
+        <div class="node-sub">Context History</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:28px;"></div>
+    </div>
+    <div style="text-align:center; margin: 4px 0; font-size:10px; color:rgba(255,255,255,0.3); font-family:'Fira Code',monospace;">Build chain-of-thought prompt</div>
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:20px;"></div>
+    </div>
+
+    <!-- Row 3: AI Layer -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">🧠 AI Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; gap:0; margin-bottom:8px;">
+      <div class="node node-green" data-tip="Chain-of-thought prompt builder">
+        <span class="node-icon">🔗</span>
+        <div class="node-title">CoT Prompt</div>
+        <div class="node-sub">Chain-of-Thought Builder</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">structured prompt</div>
+      </div>
+      <div class="node node-highlight" style="min-width:150px;" data-tip="Core AI model">
+        <span class="node-icon">🦙</span>
+        <div class="node-title">LLaMA 3.8B Instant</div>
+        <div class="node-sub">AI Reasoning Engine</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">AI response</div>
+      </div>
+      <div class="node node-green" data-tip="Response processor">
+        <span class="node-icon">⚙️</span>
+        <div class="node-title">Response Parser</div>
+        <div class="node-sub">Output Formatter</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:28px;"></div>
+    </div>
+    <div style="text-align:center; margin: 4px 0; font-size:10px; color:rgba(255,255,255,0.3); font-family:'Fira Code',monospace;">Save response + send email</div>
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:20px;"></div>
+    </div>
+
+    <!-- Row 4: Output Layer -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">📤 Output Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; gap:0;">
+      <div class="node node-cyan" data-tip="AI-generated email sent">
+        <span class="node-icon">✉️</span>
+        <div class="node-title">Email Sent</div>
+        <div class="node-sub">Via Power Automate</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">update memory</div>
+      </div>
+      <div class="node node-amber" data-tip="Updated SharePoint list">
+        <span class="node-icon">💾</span>
+        <div class="node-title">SharePoint</div>
+        <div class="node-sub">Memory Updated</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">show result</div>
+      </div>
+      <div class="node node-blue" data-tip="Result shown in app">
+        <span class="node-icon">✅</span>
+        <div class="node-title">Power Apps</div>
+        <div class="node-sub">Response Displayed</div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <hr class="arch-divider"/>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div>Microsoft Power Platform</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6;"></div>Automation Layer</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div>SharePoint Memory</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e94560;"></div>LLaMA AI Model</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div>AI Processing</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#06b6d4;"></div>Email / Output</div>
+    </div>
+  </div>
+
+  <!-- DATA FLOW STEPS -->
+  <div class="section-title" style="font-size:17px; margin-bottom:16px;">📋 Data Flow — Step by Step</div>
+  <div class="flow-box"><span class="step-num">1</span><strong>User Input</strong> — User fills form in Power Apps Canvas App and submits a request.</div>
+  <div class="flow-box"><span class="step-num">2</span><strong>Flow Triggered</strong> — Power Automate flow activates on form submission.</div>
+  <div class="flow-box"><span class="step-num">3</span><strong>Memory Fetch</strong> — Flow queries SharePoint list to retrieve previous email chain and conversation history.</div>
+  <div class="flow-box"><span class="step-num">4</span><strong>Prompt Construction</strong> — Chain-of-thought prompt is assembled: system role + email history + current request + reasoning steps.</div>
+  <div class="flow-box"><span class="step-num">5</span><strong>AI Inference</strong> — Structured prompt is sent to <strong>LLaMA 3.8B Instant</strong> — model reasons step-by-step using CoT.</div>
+  <div class="flow-box"><span class="step-num">6</span><strong>Response Parsed</strong> — AI output is extracted and formatted for email.</div>
+  <div class="flow-box"><span class="step-num">7</span><strong>Email Sent</strong> — Power Automate sends the AI-generated email via the configured email connector.</div>
+  <div class="flow-box"><span class="step-num">8</span><strong>Memory Updated</strong> — Response saved back to SharePoint to maintain conversation continuity.</div>
+  <div class="flow-box"><span class="step-num">9</span><strong>UI Updated</strong> — Power Apps displays the result to the user — loop complete.</div>
+
+  <!-- TECH STACK -->
+  <div class="section-title" style="font-size:17px; margin: 28px 0 16px;">🔧 Tech Stack</div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">📱</span>
+        <div><div class="stack-name">Power Apps</div><div class="stack-role">Frontend / UI</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Canvas App</span>
+        <span class="stack-tag">Forms</span>
+        <span class="stack-tag">Connectors</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">⚡</span>
+        <div><div class="stack-name">Power Automate</div><div class="stack-role">Orchestration</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">HTTP Action</span>
+        <span class="stack-tag">Email Connector</span>
+        <span class="stack-tag">SP Connector</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🦙</span>
+        <div><div class="stack-name">LLaMA 3.8B Instant</div><div class="stack-role">AI Brain</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Chain-of-Thought</span>
+        <span class="stack-tag">REST API</span>
+        <span class="stack-tag">Groq / Ollama</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">📋</span>
+        <div><div class="stack-name">SharePoint</div><div class="stack-role">Memory / Storage</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Lists</span>
+        <span class="stack-tag">Conversation Store</span>
+        <span class="stack-tag">Email History</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🔗</span>
+        <div><div class="stack-name">Chain-of-Thought</div><div class="stack-role">Prompt Strategy</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">System Prompt</span>
+        <span class="stack-tag">Reasoning Steps</span>
+        <span class="stack-tag">Context Window</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">📧</span>
+        <div><div class="stack-name">Email Chain</div><div class="stack-role">Context Source</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Thread History</span>
+        <span class="stack-tag">Dynamic Context</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-power -->
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 2 — AGENTIC AI
+════════════════════════════════════════ -->
+<div id="page-agentic" class="page">
+
+  <div class="section-eyebrow">Project 2</div>
+  <div class="section-title">Agentic AI Orchestration System</div>
+  <div class="section-sub">GitHub · Streamlit · Agent Loop · Tool Use · Orchestration Pipeline</div>
+
+  <div class="arch-diagram">
+
+    <!-- Row 1: Interface -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">🖥️ Interface Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; gap:0; margin-bottom:8px;">
+      <div class="node node-red" data-tip="Streamlit web UI">
+        <span class="node-icon">🌐</span>
+        <div class="node-title">Streamlit UI</div>
+        <div class="node-sub"><a href="https://aiworkshop-8dzupftsephfx7iq3xrq9p.streamlit.app/" target="_blank" style="color:#06b6d4; font-size:10px; font-weight:600; text-decoration:none;">🚀 Live App ↗</a></div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">task input</div>
+      </div>
+      <div class="node node-blue" data-tip="GitHub for version control">
+        <span class="node-icon">🐙</span>
+        <div class="node-title">GitHub</div>
+        <div class="node-sub">Version Control</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">CI trigger</div>
+      </div>
+      <div class="node node-amber" data-tip="GitHub Actions pipeline">
+        <span class="node-icon">⚙️</span>
+        <div class="node-title">GitHub Actions</div>
+        <div class="node-sub">CI/CD Pipeline</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center; margin-left: -140px;">
+      <div class="arrow-down" style="height:28px;"></div>
+    </div>
+    <div style="text-align:center; margin: 4px 0 4px -140px; font-size:10px; color:rgba(255,255,255,0.3); font-family:'Fira Code',monospace;">dispatch task to orchestrator</div>
+    <div style="display:flex; justify-content:center; margin-left: -140px;">
+      <div class="arrow-down" style="height:20px;"></div>
+    </div>
+
+    <!-- Row 2: Orchestration -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">🎯 Orchestration Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; margin-bottom:8px;">
+      <div class="node node-highlight" style="min-width:160px;" data-tip="Central agent controller">
+        <span class="node-icon">🧠</span>
+        <div class="node-title">Agent Orchestrator</div>
+        <div class="node-sub">Task Planner + Router</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:20px;"></div>
+    </div>
+    <div style="text-align:center; margin: 4px 0; font-size:10px; color:rgba(255,255,255,0.3); font-family:'Fira Code',monospace;">plan → select tool → execute → observe → repeat</div>
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:16px;"></div>
+    </div>
+
+    <!-- Row 3: Agent Loop -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">🔄 Agent Loop (ReAct Pattern)</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; gap:0; margin-bottom:8px; flex-wrap:nowrap;">
+      <div class="node node-purple" data-tip="Think step">
+        <span class="node-icon">💭</span>
+        <div class="node-title">Reason</div>
+        <div class="node-sub">Plan next step</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">act</div>
+      </div>
+      <div class="node node-green" data-tip="Execute tool">
+        <span class="node-icon">🔧</span>
+        <div class="node-title">Act</div>
+        <div class="node-sub">Call tool/API</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">observe</div>
+      </div>
+      <div class="node node-cyan" data-tip="Process result">
+        <span class="node-icon">👁️</span>
+        <div class="node-title">Observe</div>
+        <div class="node-sub">Process result</div>
+      </div>
+      <div class="arrow-right-label">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">loop / done</div>
+      </div>
+      <div class="node node-amber" data-tip="Final answer">
+        <span class="node-icon">✅</span>
+        <div class="node-title">Respond</div>
+        <div class="node-sub">Final output</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center;">
+      <div class="arrow-down" style="height:24px;"></div>
+    </div>
+
+    <!-- Row 4: Tools -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="layer-label">🛠️ Tool Layer</span>
+    </div>
+    <div class="flow-row" style="justify-content:center; gap:12px; flex-wrap:wrap;">
+      <div class="node node-blue" data-tip="Web search tool">
+        <span class="node-icon">🔍</span>
+        <div class="node-title">Search Tool</div>
+        <div class="node-sub">Web / Docs</div>
+      </div>
+      <div class="node node-green" data-tip="Code execution">
+        <span class="node-icon">💻</span>
+        <div class="node-title">Code Runner</div>
+        <div class="node-sub">Python Exec</div>
+      </div>
+      <div class="node node-amber" data-tip="File operations">
+        <span class="node-icon">📁</span>
+        <div class="node-title">File Tool</div>
+        <div class="node-sub">Read / Write</div>
+      </div>
+      <div class="node node-purple" data-tip="Memory tool">
+        <span class="node-icon">🧩</span>
+        <div class="node-title">Memory Tool</div>
+        <div class="node-sub">Session Context</div>
+      </div>
+      <div class="node node-cyan" data-tip="API calls">
+        <span class="node-icon">🔗</span>
+        <div class="node-title">API Tool</div>
+        <div class="node-sub">External Services</div>
+      </div>
+    </div>
+
+    <hr class="arch-divider"/>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div>Streamlit UI</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div>GitHub</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e94560;"></div>Orchestrator</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6;"></div>ReAct Loop</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div>Tools</div>
+    </div>
+  </div>
+
+  <!-- FLOW STEPS -->
+  <div class="section-title" style="font-size:17px; margin-bottom:16px;">📋 Agent Execution Flow</div>
+  <div class="flow-box"><span class="step-num">1</span><strong>Task Input</strong> — User enters a task via Streamlit web UI.</div>
+  <div class="flow-box"><span class="step-num">2</span><strong>GitHub Orchestration</strong> — Code versioned on GitHub, GitHub Actions handles CI/CD deployment pipeline.</div>
+  <div class="flow-box"><span class="step-num">3</span><strong>Orchestrator Activated</strong> — Agent Orchestrator receives task, breaks it into a multi-step plan.</div>
+  <div class="flow-box"><span class="step-num">4</span><strong>ReAct Loop Begins</strong> — Agent enters Reason → Act → Observe cycle using the ReAct pattern.</div>
+  <div class="flow-box"><span class="step-num">5</span><strong>Tool Selection</strong> — Orchestrator selects appropriate tool per step (search, code, file, API, memory).</div>
+  <div class="flow-box"><span class="step-num">6</span><strong>Observation</strong> — Tool result is fed back to the agent as context for the next reasoning step.</div>
+  <div class="flow-box"><span class="step-num">7</span><strong>Loop or Complete</strong> — Agent loops until task is complete or max steps reached.</div>
+  <div class="flow-box"><span class="step-num">8</span><strong>Final Output</strong> — Result rendered in Streamlit UI and logged to session memory.</div>
+
+  <!-- TECH STACK -->
+  <div class="section-title" style="font-size:17px; margin: 28px 0 16px;">🔧 Tech Stack</div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🌐</span>
+        <div><div class="stack-name">Streamlit</div><div class="stack-role">UI / Frontend</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Web UI</span>
+        <span class="stack-tag">Session State</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🐙</span>
+        <div><div class="stack-name">GitHub</div><div class="stack-role">Version Control</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Repos</span>
+        <span class="stack-tag">Actions</span>
+        <span class="stack-tag">CI/CD</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🧠</span>
+        <div><div class="stack-name">Agent Orchestrator</div><div class="stack-role">Core Logic</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">ReAct</span>
+        <span class="stack-tag">Planning</span>
+        <span class="stack-tag">Tool Routing</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🔄</span>
+        <div><div class="stack-name">ReAct Pattern</div><div class="stack-role">Agent Loop</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Reason</span>
+        <span class="stack-tag">Act</span>
+        <span class="stack-tag">Observe</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🛠️</span>
+        <div><div class="stack-name">Tool System</div><div class="stack-role">Capabilities</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">Search</span>
+        <span class="stack-tag">Code Exec</span>
+        <span class="stack-tag">File I/O</span>
+        <span class="stack-tag">APIs</span>
+      </div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-card-header">
+        <span class="stack-icon">🐍</span>
+        <div><div class="stack-name">Python</div><div class="stack-role">Core Language</div></div>
+      </div>
+      <div class="stack-tags">
+        <span class="stack-tag">3.11+</span>
+        <span class="stack-tag">asyncio</span>
+        <span class="stack-tag">LangChain</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-agentic -->
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 3 — GITHUB SETUP
+════════════════════════════════════════ -->
+<div id="page-github" class="page">
+
+  <div class="section-eyebrow">GitHub Repository Setup</div>
+  <div class="section-title">How to Structure & Push Both Projects</div>
+  <div class="section-sub">Two clean repos — ready to showcase to employers.</div>
+
+  <!-- Repo 1 -->
+  <div class="github-card">
+    <h3>📦 Repo 1 <span class="badge badge-blue">Power Platform</span></h3>
+    <p>Repository name: <code style="color:#fbbf24; font-family:'Fira Code',monospace;">power-platform-ai-email-assistant</code></p>
+    <div class="file-tree">
+<span class="folder">power-platform-ai-email-assistant/</span>
+├── <span class="folder">docs/</span>
+│   ├── <span class="file">architecture.png</span>        <span class="comment"># Export this diagram</span>
+│   └── <span class="file">flow-diagram.png</span>
+├── <span class="folder">prompts/</span>
+│   ├── <span class="file">system-prompt.md</span>         <span class="comment"># Your CoT system prompt</span>
+│   └── <span class="file">chain-of-thought.md</span>      <span class="comment"># Prompt structure</span>
+├── <span class="folder">sharepoint/</span>
+│   └── <span class="file">list-schema.json</span>          <span class="comment"># SP list structure</span>
+├── <span class="folder">power-automate/</span>
+│   └── <span class="file">flow-export.zip</span>           <span class="comment"># Exported PA flow</span>
+├── <span class="file">README.md</span>                     <span class="comment"># Project overview</span>
+└── <span class="file">architecture.html</span>             <span class="comment"># This diagram file</span>
+    </div>
+  </div>
+
+  <!-- Repo 2 -->
+  <div class="github-card">
+    <h3>📦 Repo 2 <span class="badge badge-purple">Agentic AI</span></h3>
+    <p>Repository name: <code style="color:#fbbf24; font-family:'Fira Code',monospace;">agentic-ai-orchestration</code></p>
+    <div class="file-tree">
+<span class="folder">agentic-ai-orchestration/</span>
+├── <span class="folder">app/</span>
+│   ├── <span class="file">main.py</span>                   <span class="comment"># Streamlit entry point</span>
+│   ├── <span class="file">orchestrator.py</span>           <span class="comment"># Agent orchestrator</span>
+│   └── <span class="file">tools.py</span>                  <span class="comment"># Tool definitions</span>
+├── <span class="folder">agents/</span>
+│   ├── <span class="file">planner.py</span>                <span class="comment"># Task planning</span>
+│   ├── <span class="file">executor.py</span>               <span class="comment"># Tool execution</span>
+│   └── <span class="file">memory.py</span>                 <span class="comment"># Session memory</span>
+├── <span class="folder">docs/</span>
+│   └── <span class="file">architecture.png</span>
+├── <span class="folder">.github/workflows/</span>
+│   └── <span class="file">deploy.yml</span>                <span class="comment"># GitHub Actions CI/CD</span>
+├── <span class="file">requirements.txt</span>
+├── <span class="file">README.md</span>
+└── <span class="file">architecture.html</span>             <span class="comment"># This diagram file</span>
+    </div>
+  </div>
+
+  <!-- README template -->
+  <div class="github-card">
+    <h3>📝 README Template <span class="badge badge-green">Copy & Use</span></h3>
+    <p>Use this structure for both repos — it shows up on GitHub beautifully.</p>
+    <div class="file-tree">
+# 🤖 [Project Name]
+
+> Built by Ashwin Gopal — Senior Automation Developer
+
+## 🧩 What It Does
+[One paragraph description]
+
+## 🏗️ Architecture
+![Architecture](docs/architecture.png)
+
+## ⚙️ Tech Stack
+| Layer       | Technology              |
+|-------------|-------------------------|
+| Frontend    | Power Apps / Streamlit  |
+| Automation  | Power Automate / GitHub |
+| AI Model    | LLaMA 3.8B Instant      |
+| Memory      | SharePoint / Session    |
+| Orchestration | GitHub Actions        |
+
+## 🚀 How to Run
+[Setup steps here]
+
+## 📊 Key Results
+- ✅ [Impact metric 1]
+- ✅ [Impact metric 2]
+
+## 👤 Author
+**Ashwin Gopal** · [Portfolio](https://charlie2094.github.io/Ashwin-portfolio/)
+    </div>
+  </div>
+
+  <!-- Step by step -->
+  <div class="section-title" style="font-size:17px; margin: 28px 0 16px;">🚀 Steps to Push to GitHub</div>
+  <div class="flow-box"><span class="step-num">1</span><strong>Go to github.com</strong> → New Repository → name it <code style="font-family:'Fira Code',monospace; color:#fbbf24;">power-platform-ai-email-assistant</code> → Public → Create</div>
+  <div class="flow-box"><span class="step-num">2</span><strong>Upload files</strong> → Click "uploading an existing file" → drag your docs, prompts, README</div>
+  <div class="flow-box"><span class="step-num">3</span><strong>Repeat</strong> for the second repo → <code style="font-family:'Fira Code',monospace; color:#fbbf24;">agentic-ai-orchestration</code></div>
+  <div class="flow-box"><span class="step-num">4</span><strong>Add repo links</strong> to your portfolio page at charlie2094.github.io/Ashwin-portfolio/</div>
+  <div class="flow-box"><span class="step-num">5</span><strong>Pin both repos</strong> on your GitHub profile → go to your profile → "Customize your pins"</div>
+
+</div><!-- /page-github -->
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

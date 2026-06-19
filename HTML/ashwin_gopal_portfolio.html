@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ashwin Gopal · Automation Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary:    #1a1a2e;
+    --accent:     #0f3460;
+    --highlight:  #e94560;
+    --highlight2: #f5a623;
+    --light-bg:   #f8f9fb;
+    --border:     #e2e6ef;
+    --text:       #2d2d2d;
+    --muted:      #6b7280;
+    --white:      #ffffff;
+    --tag-bg:     #eef2ff;
+    --tag-text:   #3730a3;
+    --card-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    --card-hover:  0 8px 40px rgba(0,0,0,0.13);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+    background: #fff;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 58px;
+  }
+  .nav-logo {
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--highlight); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--highlight); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    padding: 80px 48px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(233,69,96,0.12);
+    top: -150px; right: -100px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -80px; left: 80px;
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(233,69,96,0.2);
+    border: 1px solid rgba(233,69,96,0.4);
+    color: #ff7d94;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--highlight); }
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 28px;
+    max-width: 560px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .stat-num span { color: var(--highlight); }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 64px 48px;
+  }
+  .section-header {
+    margin-bottom: 36px;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--highlight);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+  }
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── PROJECT CARDS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-hover);
+  }
+  .project-card.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #f8f9fb 0%, #eef2ff 100%);
+    border-color: #c7d2fe;
+  }
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .project-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-blue   { background: #dbeafe; }
+  .icon-red    { background: #fee2e2; }
+  .icon-green  { background: #dcfce7; }
+  .icon-purple { background: #ede9fe; }
+  .icon-amber  { background: #fef3c7; }
+  .icon-pink   { background: #fce7f3; }
+
+  .project-impact {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .project-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.3;
+  }
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* Problem → Solution → Result layout for featured */
+  .psr {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .psr-item {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .psr-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 5px;
+  }
+  .psr-label.problem { color: #dc2626; }
+  .psr-label.solution { color: #2563eb; }
+  .psr-label.result { color: #16a34a; }
+  .psr-text {
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .project-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-section { background: var(--light-bg); }
+  .skills-section .section { padding-top: 56px; padding-bottom: 56px; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .skill-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+  }
+  .skill-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    position: relative;
+    padding-bottom: 32px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 147px;
+    top: 24px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-date {
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    padding-top: 3px;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: 138px;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--highlight);
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--highlight);
+  }
+  .timeline-content {
+    padding-left: 20px;
+  }
+  .timeline-role {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .timeline-company {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--highlight);
+    margin-bottom: 6px;
+  }
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── CERTS ── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .cert-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cert-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-hover);
+  }
+  .cert-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .cert-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1.35;
+  }
+  .cert-issuer {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .cert-date {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--highlight);
+    margin-top: 5px;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+  }
+  .contact-section .section { padding: 56px 48px; }
+  .contact-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .contact-left h2 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .contact-left p {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: white; }
+  .contact-link-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--light-bg);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav>
+  <div class="nav-logo">Ashwin<span>.</span></div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Open to Opportunities</div>
+    <h1>Ashwin Gopal<span>.</span></h1>
+    <p class="hero-sub">Senior Automation Developer specialising in end-to-end workflow automation, AI-powered systems, intelligent process design, and enterprise integration solutions.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">7<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">113<span>k</span></div>
+        <div class="stat-label">Hrs/yr Saved</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">AI Projects Live</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50<span>%</span></div>
+        <div class="stat-label">KPI Cycle Reduction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROJECTS ════ -->
+<div id="projects">
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">What I've Built</div>
+    <div class="section-title">Featured Projects</div>
+    <div class="section-subtitle">Real problems. Real solutions. Measurable outcomes.</div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Featured Card 1 — AutoRequest Pro -->
+    <div class="project-card featured">
+      <div class="project-top">
+        <div>
+          <div class="project-icon icon-purple">⚡</div>
+        </div>
+        <div class="project-impact">✅ Live in Production</div>
+      </div>
+      <div class="project-title">AutoRequest Pro — AI-Powered Automation Request Platform</div>
+      <div class="project-desc">A production-grade internal platform built for WPP Production — enabling teams to submit automation requests via a 3-step wizard, auto-calculate ROI, receive AI-generated acknowledgement emails via a custom LLaMA 3 connector, and collaborate via a brainstorming space. Currently managing 46+ requests and tracking 113,887 hrs/yr in projected savings.</div>
+      <div class="psr">
+        <div class="psr-item">
+          <div class="psr-label problem">Problem</div>
+          <div class="psr-text">No structured way to capture, prioritise, or track automation requests across teams — all manual and ad-hoc.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label solution">Solution</div>
+          <div class="psr-text">Built a full Power Platform app with ROI calculator, AI email acknowledgement via custom Groq/LLaMA 3 connector, SharePoint memory, and brainstorming space.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label result">Result</div>
+          <div class="psr-text">46+ requests tracked · 113,887 hrs/yr saved · 14,242 working days reclaimed · 25 brainstorm ideas · 6 contributors.</div>
+        </div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Power Apps Canvas</span>
+        <span class="project-tag">Power Automate</span>
+        <span class="project-tag">LLaMA 3 · Groq</span>
+        <span class="project-tag">Custom Connector</span>
+        <span class="project-tag">SharePoint</span>
+        <span class="project-tag">Chain-of-Thought</span>
+        <span class="project-tag"><a href="https://github.com/Charlie2094/AutoRequest-Pro" target="_blank" style="color:inherit;text-decoration:none;">🐙 GitHub</a></span>
+      </div>
+    </div>
+
+    <!-- Featured Card 2 — Agentic AI -->
+    <div class="project-card featured">
+      <div class="project-top">
+        <div>
+          <div class="project-icon icon-blue">🤖</div>
+        </div>
+        <div class="project-impact">✅ Workshop Project</div>
+      </div>
+      <div class="project-title">Agentic AI Orchestration System</div>
+      <div class="project-desc">Designed and built a multi-agent AI orchestration pipeline as part of an Agentic AI workshop — using Streamlit as the web interface and GitHub for version control and CI/CD. Implemented a ReAct (Reason-Act-Observe) agent loop with multi-step task planning, tool selection, and session memory. The system autonomously reasons, selects tools, executes actions, and iterates until task completion.</div>
+      <div class="psr">
+        <div class="psr-item">
+          <div class="psr-label problem">Problem</div>
+          <div class="psr-text">Single-turn AI responses can't handle complex, multi-step tasks that require planning, tool use, and iteration.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label solution">Solution</div>
+          <div class="psr-text">Built a ReAct agent loop — Reason → Act → Observe cycle with tool routing (search, code exec, file I/O, APIs) orchestrated via GitHub + Streamlit.</div>
+        </div>
+        <div class="psr-item">
+          <div class="psr-label result">Result</div>
+          <div class="psr-text">A working agentic pipeline that autonomously completes multi-step tasks — demonstrated during Agentic AI workshop.</div>
+        </div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Streamlit</span>
+        <span class="project-tag">GitHub Actions</span>
+        <span class="project-tag">ReAct Pattern</span>
+        <span class="project-tag">Agent Orchestration</span>
+        <span class="project-tag">Tool Use</span>
+        <span class="project-tag">LLM</span>
+        <span class="project-tag"><a href="https://aiworkshop-8dzupftsephfx7iq3xrq9p.streamlit.app/" target="_blank" style="color:inherit;text-decoration:none;">🚀 Live App</a></span>
+      </div>
+    </div>
+
+    <!-- Card 3 — Queue Manager -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-blue">⚖️</div>
+        <div class="project-impact">⚡ ~90% Time Saved</div>
+      </div>
+      <div class="project-title">Queue Manager & Load Balancer</div>
+      <div class="project-desc">Identified a critical job distribution bottleneck in the production pipeline and engineered a weighted round-robin Queue Manager and Load Balancer — improving throughput, system stability, and peak-period performance across teams.</div>
+      <div class="project-tags">
+        <span class="project-tag">Enfocus Switch</span>
+        <span class="project-tag">JavaScript</span>
+        <span class="project-tag">Workflow Design</span>
+        <span class="project-tag">Load Balancing</span>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-red">🎨</div>
+        <div class="project-impact">✅ Multi-tool</div>
+      </div>
+      <div class="project-title">Adobe Creative Suite Automation</div>
+      <div class="project-desc">Designed and implemented automation scripts for InDesign, Illustrator, and Photoshop — eliminating manual handoffs between creative tools and production pipelines, significantly reducing asset preparation time.</div>
+      <div class="project-tags">
+        <span class="project-tag">ExtendScript</span>
+        <span class="project-tag">InDesign</span>
+        <span class="project-tag">Photoshop</span>
+        <span class="project-tag">Illustrator</span>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-amber">🔁</div>
+        <div class="project-impact">✅ Reusable Component</div>
+      </div>
+      <div class="project-title">Word-to-Excel Content Extractor</div>
+      <div class="project-desc">Built a structured Word-to-Excel content extraction tool as a reusable internal utility — standardising outputs and eliminating recurring ad-hoc scripting requests across documentation and reporting teams.</div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Word Automation</span>
+        <span class="project-tag">Excel Scripting</span>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-pink">🔳</div>
+        <div class="project-impact">✅ Custom Tool</div>
+      </div>
+      <div class="project-title">SVG QR Code Generator with Logo Integration</div>
+      <div class="project-desc">Developed a dynamic SVG-based QR code generator with custom logo integration — built as a scalable internal tool replacing manual QR generation workflows with an automated, brand-consistent solution.</div>
+      <div class="project-tags">
+        <span class="project-tag">SVG</span>
+        <span class="project-tag">JavaScript</span>
+        <span class="project-tag">TypeScript</span>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-blue">🔀</div>
+        <div class="project-impact">✅ Enterprise Scale</div>
+      </div>
+      <div class="project-title">Enfocus Switch End-to-End Workflow Automation</div>
+      <div class="project-desc">Architected modular, reusable Enfocus Switch workflow components for file routing, validation, error handling, job ticket parsing, and asset lifecycle management — forming the backbone of enterprise production automation.</div>
+      <div class="project-tags">
+        <span class="project-tag">Enfocus Switch</span>
+        <span class="project-tag">Workflow Design</span>
+        <span class="project-tag">File Routing</span>
+        <span class="project-tag">Error Handling</span>
+      </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon icon-green">📈</div>
+        <div class="project-impact">⚡ 50% Faster</div>
+      </div>
+      <div class="project-title">KPI Dashboard & Reporting Automation</div>
+      <div class="project-desc">Automated KPI dashboards and performance reports using Excel macros at Straive — reducing the reporting cycle time by 50% and increasing team performance transparency for stakeholders.</div>
+      <div class="project-tags">
+        <span class="project-tag">Excel VBA</span>
+        <span class="project-tag">KPI Dashboards</span>
+        <span class="project-tag">Data Analysis</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ════ SKILLS ════ -->
+<div class="skills-section" id="skills">
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Capabilities</div>
+    <div class="section-title">Skills & Technologies</div>
+    <div class="section-subtitle">Tools and disciplines I work with across the full automation lifecycle.</div>
+  </div>
+  <div class="skills-grid">
+
+    <div class="skill-card">
+      <h4>🧠 AI &amp; Agentic Systems</h4>
+      <div class="tags">
+        <span class="tag">LLaMA 3</span>
+        <span class="tag">Groq API</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">Chain-of-Thought</span>
+        <span class="tag">ReAct Pattern</span>
+        <span class="tag">Agentic AI</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Custom Connectors</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>⚙️ Languages &amp; Scripting</h4>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">AppleScript</span>
+        <span class="tag">ExtendScript</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>🤖 Automation & RPA</h4>
+      <div class="tags">
+        <span class="tag">Enfocus Switch</span>
+        <span class="tag">Automation Anywhere</span>
+        <span class="tag">Power Automate</span>
+        <span class="tag">Excel VBA/Macros</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>🎨 Adobe & Creative Tools</h4>
+      <div class="tags">
+        <span class="tag">InDesign Scripting</span>
+        <span class="tag">Photoshop Scripting</span>
+        <span class="tag">Illustrator Scripting</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>☁️ Low-Code / Power Platform</h4>
+      <div class="tags">
+        <span class="tag">Power Apps</span>
+        <span class="tag">Power Automate</span>
+        <span class="tag">SharePoint</span>
+        <span class="tag">Canvas Apps</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>🔍 Consulting & Delivery</h4>
+      <div class="tags">
+        <span class="tag">Process Assessment</span>
+        <span class="tag">Requirements Gathering</span>
+        <span class="tag">Gap Analysis</span>
+        <span class="tag">Solution Design</span>
+        <span class="tag">Stakeholder Management</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <h4>📋 Project & Collaboration</h4>
+      <div class="tags">
+        <span class="tag">JIRA</span>
+        <span class="tag">Confluence</span>
+        <span class="tag">Agile/Scrum</span>
+        <span class="tag">Backlog Prioritization</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ════ EXPERIENCE ════ -->
+<div id="experience">
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Career</div>
+    <div class="section-title">Work Experience</div>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">2024 – Present</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-role">Senior Automation Developer</div>
+        <div class="timeline-company">WPP Production · Chennai, India</div>
+        <div class="timeline-desc">Leading end-to-end automation design and delivery — from requirement scoping and process assessment through to implementation and documentation. Delivering enterprise-grade workflow systems, Power Platform solutions, and AI-assisted automation.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2021 – 2024</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-role">Automation Developer</div>
+        <div class="timeline-company">WPP Production · Chennai, India</div>
+        <div class="timeline-desc">Built metadata-driven workflow automation, data transformation pipelines, and Adobe scripting integrations. Developed the foundational Enfocus Switch architectures that grew into enterprise production systems.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2017 – 2021</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-role">Quality Analyst</div>
+        <div class="timeline-company">Straive (formerly SPS) · Chennai, India</div>
+        <div class="timeline-desc">Identified workflow inefficiencies through data analysis, automated KPI dashboards reducing reporting time by 50%, and drove CAPA initiatives to reduce client escalations.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ════ CERTIFICATIONS ════ -->
+<div id="certifications">
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Credentials</div>
+    <div class="section-title">Certifications</div>
+  </div>
+  <div class="certs-grid">
+
+    <div class="cert-card">
+      <div class="cert-icon">🤖</div>
+      <div>
+        <div class="cert-name"><a href="https://certificates.automationanywhere.com/6fa54423-1dc8-4388-9a3f-8c68b75ed447#acc.SLeC8Upx" target="_blank" style="color:inherit; text-decoration:none;">Essential Automation Anywhere Certification ↗</a></div>
+        <div class="cert-issuer">Automation Anywhere</div>
+        <div class="cert-date">May 2025</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon">📊</div>
+      <div>
+        <div class="cert-name"><a href="https://certificates.automationanywhere.com/0dd46f88-5c8e-486c-8e31-5b27890a576b#acc.epcOzvP4" target="_blank" style="color:inherit; text-decoration:none;">Business Analyst Badge ↗</a></div>
+        <div class="cert-issuer">Automation Anywhere</div>
+        <div class="cert-date">Apr 2025</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-icon">📁</div>
+      <div>
+        <div class="cert-name"><a href="https://www.coursera.org/account/accomplishments/professional-cert/HVBHYVZ4Y83R" target="_blank" style="color:inherit; text-decoration:none;">Google Project Management Certificate ↗</a></div>
+        <div class="cert-issuer">Google · Coursera</div>
+        <div class="cert-date">Mar 2023</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ════ CONTACT ════ -->
+<div class="contact-section" id="contact">
+<div class="section">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <h2>Let's work together.</h2>
+      <p>Open to Senior Automation Consultant & Automation Specialist roles.</p>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="tel:+919790964452">
+        <div class="contact-link-icon">📞</div>
+        +91 9790964452
+      </a>
+      <a class="contact-link" href="mailto:gopal2ashwin@gmail.com">
+        <div class="contact-link-icon">✉️</div>
+        gopal2ashwin@gmail.com
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/ashwin-gopal-aa06967b" target="_blank">
+        <div class="contact-link-icon">💼</div>
+        linkedin.com/in/ashwin-gopal-aa06967b
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  © 2026 Ashwin Gopal · Chennai, India · Built with purpose.
+</footer>
+
+</body>
+</html>

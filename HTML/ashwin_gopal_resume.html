@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ashwin Gopal – Resume</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary:    #1a1a2e;
+    --accent:     #0f3460;
+    --highlight:  #e94560;
+    --light-bg:   #f8f9fb;
+    --border:     #e2e6ef;
+    --text:       #2d2d2d;
+    --muted:      #6b7280;
+    --tag-bg:     #eef2ff;
+    --tag-text:   #3730a3;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text);
+    background: #fff;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 52px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 22px;
+    border-bottom: 3px solid var(--highlight);
+    margin-bottom: 26px;
+  }
+  .header-left h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--primary);
+    line-height: 1.1;
+  }
+  .header-left .tagline {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--highlight);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.9;
+    flex-shrink: 0;
+  }
+  .header-right a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .header-right a:hover { text-decoration: underline; }
+
+  /* ── SUMMARY ── */
+  .summary {
+    background: var(--light-bg);
+    border-left: 4px solid var(--highlight);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 28px;
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  section { margin-bottom: 28px; }
+
+  /* ── EXPERIENCE ── */
+  .job { margin-bottom: 22px; }
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+  .job-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .job-company {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--highlight);
+  }
+  .job-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    flex-shrink: 0;
+  }
+  .job-meta .tenure {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 3px;
+  }
+
+  .job ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 8px;
+  }
+  .job ul li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    color: var(--text);
+  }
+  .job ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--highlight);
+    font-size: 11px;
+    top: 5px;
+  }
+
+  /* Impact badges */
+  .impact {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 4px;
+    white-space: nowrap;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .skill-group h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── EDUCATION & CERTS ── */
+  .edu-row, .cert-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .edu-row .deg {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 13.5px;
+  }
+  .edu-row .school {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .cert-row .cert-name {
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .cert-row .cert-date {
+    font-size: 12px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .cert-issuer {
+    font-size: 12px;
+    color: var(--muted);
+    display: block;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { padding: 28px 36px; font-size: 12px; }
+    .summary { background: #f5f5f5; }
+    .tags .tag { border: 1px solid #ccc; background: transparent; color: #333; }
+    .impact { background: #fef3c7; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="header">
+  <div class="header-left">
+    <h1>Ashwin Gopal</h1>
+    <div class="tagline">Senior Automation Developer · Process Automation · Workflow Optimisation · RPA</div>
+  </div>
+  <div class="header-right">
+    Chennai, India<br/>
+    +91 9790964452<br/>
+    gopal2ashwin@gmail.com<br/>
+    <a href="https://www.linkedin.com/in/ashwin-gopal-aa06967b" target="_blank">linkedin.com/in/ashwin-gopal-aa06967b</a><br/>
+    <a href="https://charlie2094.github.io/Ashwin-portfolio/" target="_blank">charlie2094.github.io/Ashwin-portfolio</a>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════
+     PROFESSIONAL SUMMARY
+════════════════════════════════════ -->
+<section>
+  <div class="summary">
+    Results-driven automation professional with <strong>7+ years</strong> of experience assessing, designing, and delivering end-to-end automation solutions across creative production, publishing, and enterprise environments. Proven ability to identify process inefficiencies, define automation strategies, and implement scalable solutions — spanning Enfocus Switch, RPA (Automation Anywhere), Power Platform, Adobe scripting ecosystems, and Python. Experienced in engaging with stakeholders at all levels to translate business challenges into working automation, reducing manual effort, improving throughput, and enabling teams to scale. Brings a rare combination of deep technical execution and consultative thinking.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     EXPERIENCE
+════════════════════════════════════ -->
+<section>
+  <div class="section-title">Experience</div>
+
+  <!-- Job 1 -->
+  <div class="job">
+    <div class="job-header">
+      <div>
+        <div class="job-title">Senior Automation Developer</div>
+        <div class="job-company">WPP Production · Chennai, India</div>
+      </div>
+      <div class="job-meta">
+        2024 – Present
+        <br/><span class="tenure">Current Role</span>
+      </div>
+    </div>
+    <ul>
+      <li><strong>Assessed and redesigned production automation workflows</strong> end-to-end using Enfocus Switch — identifying bottlenecks, defining solution patterns, and implementing reliable file routing, validation, and error-handling pipelines.</li>
+      <li>Consulted with cross-functional teams to <strong>define automation requirements</strong>, conduct gap analysis, and translate business needs into modular, reusable workflow components — reducing onboarding time for new workflows significantly.</li>
+      <li>Identified a critical job distribution bottleneck and delivered a <strong>Queue Manager &amp; Load Balancer</strong> using weighted round-robin logic — improving throughput, system stability, and peak-period performance.</li>
+      <li>Designed and delivered a <strong>Power Platform solution</strong> (Canvas Apps, SharePoint, Power Automate) for intake tracking — including approval workflows, admin controls, and feedback capture — adopted across teams. <span class="impact">Reduced manual intake effort</span></li>
+      <li>Built an <strong>AI-powered Email Assistant</strong> using Power Apps Canvas, Power Automate, and LLaMA 3.8B Instant — leveraging SharePoint as a memory store and chain-of-thought prompting for contextual, multi-turn email generation.</li>
+      <li>Designed and delivered <strong>AutoRequest Pro</strong> — a production-grade automation request platform for WPP Production built on Power Apps, Power Automate, and a custom Groq/LLaMA 3 connector — featuring a 3-step intake wizard, auto ROI calculator, AI email acknowledgement, brainstorming space, and request tracking. Currently managing <strong>46+ requests</strong> tracking <strong>113,887 hrs/yr</strong> in projected savings. <span class="impact">Live in Production</span></li>
+      <li>Completed an <strong>Agentic AI Workshop</strong> — designed and orchestrated a multi-agent AI pipeline using GitHub and Streamlit, implementing a ReAct (Reason-Act-Observe) agent loop with tool use and task orchestration.</li>
+      <li>Identified a multi-day manual reporting pain point and designed a <strong>fully automated Excel scripting solution</strong>, compressing the process from days to minutes. <span class="impact">~90% time saved</span></li>
+      <li>Recommended and implemented <strong>Adobe scripting integrations</strong> (InDesign, Illustrator, Photoshop) to eliminate manual handoffs between creative tools and production pipelines.</li>
+      <li>Developed <strong>reusable internal automation utilities</strong> (Word-to-Excel extractor, SVG QR code generator) — reducing recurring ad-hoc scripting requests and standardising outputs across teams.</li>
+      <li>Leveraged <strong>AI-assisted automation and prompt engineering</strong> to accelerate solution prototyping, documentation, and client-facing requirement refinement cycles.</li>
+      <li>Evaluated and presented <strong>RPA opportunities using Automation Anywhere</strong> — assessing feasibility, ROI, and implementation approach for broader business process automation.</li>
+      <li>Maintained <strong>Confluence-based process documentation</strong> and improvement logs — enabling knowledge transfer, governance, and continuous optimisation across automation initiatives.</li>
+    </ul>
+  </div>
+
+  <!-- Job 2 -->
+  <div class="job">
+    <div class="job-header">
+      <div>
+        <div class="job-title">Automation Developer</div>
+        <div class="job-company">WPP Production · Chennai, India</div>
+      </div>
+      <div class="job-meta">
+        2021 – 2024
+        <br/><span class="tenure">3 yrs</span>
+      </div>
+    </div>
+    <ul>
+      <li>Analysed localisation and creative adaptation workflows and delivered <strong>metadata-driven automation solutions</strong> using Python, AppleScript, and JavaScript — eliminating repetitive manual processes across production teams.</li>
+      <li>Identified documentation inefficiencies and built <strong>automated data transformation pipelines</strong> for Word→Excel and Excel→Excel conversions, establishing repeatable, scalable patterns for reporting workflows.</li>
+      <li>Assessed version control and compliance pain points and implemented <strong>file management automation</strong> — bulk renaming, folder structuring, and metadata tagging — ensuring audit-ready outputs consistently.</li>
+      <li>Designed and deployed early <strong>Enfocus Switch automation flows</strong> for file validation, job-ticket matching, and conditional asset routing — the foundation for later enterprise-scale automation systems.</li>
+      <li>Recommended and built <strong>Adobe scripting integrations</strong> (InDesign, Photoshop, Illustrator) to bridge creative tooling with automated production workflows, improving adaptation speed and quality.</li>
+      <li>Recognised for <strong>cross-functional consulting approach</strong> — proactively identifying improvement opportunities across teams and delivering solutions that enabled enterprise-scale automation growth.</li>
+    </ul>
+  </div>
+
+  <!-- Job 3 -->
+  <div class="job">
+    <div class="job-header">
+      <div>
+        <div class="job-title">Quality Analyst</div>
+        <div class="job-company">Straive (formerly SPS) · Chennai, India</div>
+      </div>
+      <div class="job-meta">
+        2017 – 2021
+        <br/><span class="tenure">4 yrs</span>
+      </div>
+    </div>
+    <ul>
+      <li>Analyzed publishing workflow inefficiencies using data analysis, driving process improvements that ensured <strong>consistent on-time delivery</strong> and elevated content accuracy.</li>
+      <li>Automated <strong>KPI dashboards and performance reports using Excel macros</strong>, reducing reporting cycle time by <strong>50%</strong> and increasing team transparency. <span class="impact">50% faster reporting</span></li>
+      <li>Drove <strong>CAPA initiatives</strong> (Corrective and Preventive Actions) — identifying root causes, proposing solutions, and reducing client escalations.</li>
+      <li>Partnered with stakeholders to continuously refine QA processes and align with quality standards and business objectives.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SKILLS
+════════════════════════════════════ -->
+<section>
+  <div class="section-title">Skills &amp; Technologies</div>
+  <div class="skills-grid">
+
+    <div class="skill-group">
+      <h4>Languages &amp; Scripting</h4>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">AppleScript</span>
+        <span class="tag">ExtendScript</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Automation &amp; RPA</h4>
+      <div class="tags">
+        <span class="tag">Enfocus Switch</span>
+        <span class="tag">Automation Anywhere</span>
+        <span class="tag">Power Automate</span>
+        <span class="tag">Excel VBA/Macros</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Adobe &amp; Creative Tools</h4>
+      <div class="tags">
+        <span class="tag">InDesign Scripting</span>
+        <span class="tag">Photoshop Scripting</span>
+        <span class="tag">Illustrator Scripting</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Low-Code / Power Platform</h4>
+      <div class="tags">
+        <span class="tag">Power Apps</span>
+        <span class="tag">Power Automate</span>
+        <span class="tag">SharePoint</span>
+        <span class="tag">Canvas Apps</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>AI &amp; Agentic Systems</h4>
+      <div class="tags">
+        <span class="tag">LLaMA 3.8B</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">Chain-of-Thought</span>
+        <span class="tag">Agentic AI</span>
+        <span class="tag">ReAct Pattern</span>
+        <span class="tag">Streamlit</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Consulting &amp; Delivery</h4>
+      <div class="tags">
+        <span class="tag">Process Assessment</span>
+        <span class="tag">Requirements Gathering</span>
+        <span class="tag">Gap Analysis</span>
+        <span class="tag">Solution Design</span>
+        <span class="tag">Stakeholder Management</span>
+        <span class="tag">ROI Analysis</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Project &amp; Collaboration</h4>
+      <div class="tags">
+        <span class="tag">JIRA</span>
+        <span class="tag">Confluence</span>
+        <span class="tag">Agile/Scrum</span>
+        <span class="tag">Backlog Prioritization</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CERTIFICATIONS
+════════════════════════════════════ -->
+<section>
+  <div class="section-title">Certifications</div>
+
+  <div class="cert-row">
+    <div>
+      <div class="cert-name">Essential Automation Anywhere Certification</div>
+      <span class="cert-issuer">Automation Anywhere</span>
+    </div>
+    <div class="cert-date">May 2025</div>
+  </div>
+
+  <div class="cert-row">
+    <div>
+      <div class="cert-name">Business Analyst Badge</div>
+      <span class="cert-issuer">Automation Anywhere</span>
+    </div>
+    <div class="cert-date">Apr 2025</div>
+  </div>
+
+  <div class="cert-row">
+    <div>
+      <div class="cert-name">Google Project Management Certificate</div>
+      <span class="cert-issuer">Google · Coursera</span>
+    </div>
+    <div class="cert-date">Mar 2023</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     EDUCATION
+════════════════════════════════════ -->
+<section>
+  <div class="section-title">Education</div>
+  <div class="edu-row">
+    <div>
+      <div class="deg">Bachelor of Technology – Computer Science</div>
+      <div class="school">Adams Engineering College</div>
+    </div>
+    <div class="cert-date">June 2016</div>
+  </div>
+</section>
+
+</body>
+</html>
