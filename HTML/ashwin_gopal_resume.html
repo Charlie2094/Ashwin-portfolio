@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ashwin Gopal – Resume</title>
+<title>Ashwin Gopal — Resume</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --primary:    #1a1a2e;
-    --accent:     #0f3460;
-    --highlight:  #e94560;
-    --light-bg:   #f8f9fb;
-    --border:     #e2e6ef;
-    --text:       #2d2d2d;
-    --muted:      #6b7280;
-    --tag-bg:     #eef2ff;
-    --tag-text:   #3730a3;
+    --primary:   #1a1a2e;
+    --accent:    #0f3460;
+    --highlight: #e94560;
+    --light-bg:  #f8f9fb;
+    --border:    #e2e6ef;
+    --text:      #2d2d2d;
+    --muted:     #6b7280;
+    --tag-bg:    #eef2ff;
+    --tag-text:  #3730a3;
+    --white:     #ffffff;
   }
 
   body {
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
-    line-height: 1.65;
+    font-size: 13px;
+    line-height: 1.6;
     color: var(--text);
     background: #fff;
     max-width: 900px;
     margin: 0 auto;
-    padding: 48px 52px;
+    padding: 44px 52px;
   }
 
   /* ── HEADER ── */
@@ -37,29 +38,29 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 24px;
-    padding-bottom: 22px;
+    gap: 20px;
+    padding-bottom: 20px;
     border-bottom: 3px solid var(--highlight);
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
   .header-left h1 {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 800;
     letter-spacing: -0.5px;
     color: var(--primary);
     line-height: 1.1;
   }
   .header-left .tagline {
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--highlight);
-    margin-top: 4px;
+    margin-top: 5px;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
   .header-right {
     text-align: right;
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--muted);
     line-height: 1.9;
     flex-shrink: 0;
@@ -69,23 +70,21 @@
     text-decoration: none;
     font-weight: 500;
   }
-  .header-right a:hover { text-decoration: underline; }
 
   /* ── SUMMARY ── */
   .summary {
     background: var(--light-bg);
     border-left: 4px solid var(--highlight);
-    padding: 14px 18px;
+    padding: 13px 17px;
     border-radius: 0 8px 8px 0;
-    margin-bottom: 28px;
-    font-size: 13.5px;
-    color: var(--text);
+    margin-bottom: 26px;
+    font-size: 13px;
     line-height: 1.7;
   }
 
-  /* ── SECTION HEADERS ── */
+  /* ── SECTION TITLES ── */
   .section-title {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 1.8px;
     text-transform: uppercase;
@@ -102,10 +101,10 @@
     background: var(--border);
   }
 
-  section { margin-bottom: 28px; }
+  section { margin-bottom: 26px; }
 
   /* ── EXPERIENCE ── */
-  .job { margin-bottom: 22px; }
+  .job { margin-bottom: 20px; }
   .job-header {
     display: flex;
     justify-content: space-between;
@@ -115,31 +114,31 @@
     margin-bottom: 2px;
   }
   .job-title {
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--primary);
   }
   .job-company {
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 500;
     color: var(--highlight);
   }
   .job-meta {
     text-align: right;
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--muted);
     line-height: 1.6;
     flex-shrink: 0;
   }
-  .job-meta .tenure {
+  .tenure {
     display: inline-block;
     background: var(--tag-bg);
     color: var(--tag-text);
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 600;
-    padding: 2px 8px;
+    padding: 1px 8px;
     border-radius: 12px;
-    margin-top: 3px;
+    margin-top: 2px;
   }
 
   .job ul {
@@ -150,23 +149,84 @@
   .job ul li {
     padding: 3px 0 3px 16px;
     position: relative;
-    color: var(--text);
+    font-size: 12.5px;
   }
   .job ul li::before {
     content: '▸';
     position: absolute;
     left: 0;
     color: var(--highlight);
-    font-size: 11px;
+    font-size: 10px;
     top: 5px;
   }
 
-  /* Impact badges */
+  /* ── PROJECT HIGHLIGHT ── */
+  .project-highlight {
+    background: linear-gradient(135deg, #f8f9fb, #eef2ff);
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+  }
+  .project-highlight-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .project-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 10px;
+    background: rgba(16,185,129,0.12);
+    color: #065f46;
+    border: 1px solid rgba(16,185,129,0.3);
+  }
+  .project-highlight ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .project-highlight ul li {
+    padding: 2px 0 2px 14px;
+    position: relative;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .project-highlight ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 3px;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+  }
+  .project-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 20px;
+  }
+
+  /* ── IMPACT BADGE ── */
   .impact {
     display: inline-block;
     background: #fef3c7;
     color: #92400e;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     padding: 1px 7px;
     border-radius: 10px;
@@ -178,100 +238,95 @@
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    gap: 12px;
   }
   .skill-group h4 {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .tag {
     background: var(--tag-bg);
     color: var(--tag-text);
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 3px 10px;
+    padding: 2px 9px;
     border-radius: 20px;
   }
 
-  /* ── EDUCATION & CERTS ── */
-  .edu-row, .cert-row {
+  /* ── CERTS & EDUCATION ── */
+  .cert-row, .edu-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 4px;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
-  .edu-row .deg {
+  .cert-name {
     font-weight: 600;
-    color: var(--primary);
-    font-size: 13.5px;
-  }
-  .edu-row .school {
     font-size: 12.5px;
-    color: var(--muted);
-  }
-  .cert-row .cert-name {
-    font-weight: 500;
-    font-size: 13px;
     color: var(--text);
   }
-  .cert-row .cert-date {
-    font-size: 12px;
+  .cert-issuer {
+    font-size: 11.5px;
+    color: var(--muted);
+    display: block;
+    margin-top: 1px;
+  }
+  .cert-date {
+    font-size: 11.5px;
     color: var(--muted);
     flex-shrink: 0;
   }
-  .cert-issuer {
+  .deg {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 13px;
+  }
+  .school {
     font-size: 12px;
     color: var(--muted);
-    display: block;
   }
 
   /* ── PRINT ── */
   @media print {
-    body { padding: 28px 36px; font-size: 12px; }
+    body { padding: 24px 32px; font-size: 11.5px; }
     .summary { background: #f5f5f5; }
-    .tags .tag { border: 1px solid #ccc; background: transparent; color: #333; }
-    .impact { background: #fef3c7; }
+    .project-highlight { background: #f5f5f5; }
   }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════
-     HEADER
-════════════════════════════════════ -->
+<!-- ════ HEADER ════ -->
 <header class="header">
   <div class="header-left">
     <h1>Ashwin Gopal</h1>
-    <div class="tagline">Senior Automation Developer · Process Automation · Workflow Optimisation · RPA</div>
+    <div class="tagline">Senior Automation Developer · Process Automation · AI Systems · RPA</div>
   </div>
   <div class="header-right">
     Chennai, India<br/>
     +91 9790964452<br/>
-    gopal2ashwin@gmail.com<br/>
+    <a href="mailto:gopal2ashwin@gmail.com">gopal2ashwin@gmail.com</a><br/>
     <a href="https://www.linkedin.com/in/ashwin-gopal-aa06967b" target="_blank">linkedin.com/in/ashwin-gopal-aa06967b</a><br/>
+    <a href="https://ashwin-gopal.streamlit.app/" target="_blank">ashwin-gopal.streamlit.app</a><br/>
     <a href="https://charlie2094.github.io/Ashwin-portfolio/" target="_blank">charlie2094.github.io/Ashwin-portfolio</a>
   </div>
 </header>
 
-<!-- ════════════════════════════════════
-     PROFESSIONAL SUMMARY
-════════════════════════════════════ -->
+<!-- ════ SUMMARY ════ -->
 <section>
   <div class="summary">
-    Results-driven automation professional with <strong>7+ years</strong> of experience assessing, designing, and delivering end-to-end automation solutions across creative production, publishing, and enterprise environments. Proven ability to identify process inefficiencies, define automation strategies, and implement scalable solutions — spanning Enfocus Switch, RPA (Automation Anywhere), Power Platform, Adobe scripting ecosystems, and Python. Experienced in engaging with stakeholders at all levels to translate business challenges into working automation, reducing manual effort, improving throughput, and enabling teams to scale. Brings a rare combination of deep technical execution and consultative thinking.
+    Results-driven <strong>Senior Automation Developer</strong> with <strong>7+ years</strong> of experience designing, building, and delivering end-to-end automation solutions, AI-powered systems, and enterprise workflow platforms across creative production and enterprise environments. Proven ability to assess complex business processes, design scalable solutions, and implement them across Enfocus Switch, Power Platform, RPA (Automation Anywhere), Python, and AI/LLM ecosystems. Brings a consultative mindset — engaging stakeholders, identifying inefficiencies, and delivering measurable impact. Actively seeking <strong>Senior Automation Consultant</strong> or <strong>Automation Specialist</strong> roles.
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     EXPERIENCE
-════════════════════════════════════ -->
+<!-- ════ EXPERIENCE ════ -->
 <section>
   <div class="section-title">Experience</div>
 
@@ -288,20 +343,58 @@
       </div>
     </div>
     <ul>
-      <li><strong>Assessed and redesigned production automation workflows</strong> end-to-end using Enfocus Switch — identifying bottlenecks, defining solution patterns, and implementing reliable file routing, validation, and error-handling pipelines.</li>
-      <li>Consulted with cross-functional teams to <strong>define automation requirements</strong>, conduct gap analysis, and translate business needs into modular, reusable workflow components — reducing onboarding time for new workflows significantly.</li>
-      <li>Identified a critical job distribution bottleneck and delivered a <strong>Queue Manager &amp; Load Balancer</strong> using weighted round-robin logic — improving throughput, system stability, and peak-period performance.</li>
-      <li>Designed and delivered a <strong>Power Platform solution</strong> (Canvas Apps, SharePoint, Power Automate) for intake tracking — including approval workflows, admin controls, and feedback capture — adopted across teams. <span class="impact">Reduced manual intake effort</span></li>
-      <li>Built an <strong>AI-powered Email Assistant</strong> using Power Apps Canvas, Power Automate, and LLaMA 3.8B Instant — leveraging SharePoint as a memory store and chain-of-thought prompting for contextual, multi-turn email generation.</li>
-      <li>Designed and delivered <strong>AutoRequest Pro</strong> — a production-grade automation request platform for WPP Production built on Power Apps, Power Automate, and a custom Groq/LLaMA 3 connector — featuring a 3-step intake wizard, auto ROI calculator, AI email acknowledgement, brainstorming space, and request tracking. Currently managing <strong>46+ requests</strong> tracking <strong>113,887 hrs/yr</strong> in projected savings. <span class="impact">Live in Production</span></li>
-      <li>Completed an <strong>Agentic AI Workshop</strong> — designed and orchestrated a multi-agent AI pipeline using GitHub and Streamlit, implementing a ReAct (Reason-Act-Observe) agent loop with tool use and task orchestration.</li>
-      <li>Identified a multi-day manual reporting pain point and designed a <strong>fully automated Excel scripting solution</strong>, compressing the process from days to minutes. <span class="impact">~90% time saved</span></li>
+      <li>Assessed and redesigned production automation workflows end-to-end using <strong>Enfocus Switch</strong> — defining solution patterns for file routing, validation, error handling, and asset lifecycle management.</li>
+      <li>Identified a critical job distribution bottleneck and engineered a <strong>Queue Manager &amp; Load Balancer</strong> using weighted round-robin logic — improving throughput, system stability, and peak-period performance. <span class="impact">~90% time saved</span></li>
+      <li>Transformed multi-day manual reporting cycles into a <strong>fully automated Excel scripting solution</strong> — compressing days of work into minutes. <span class="impact">~90% time saved</span></li>
       <li>Recommended and implemented <strong>Adobe scripting integrations</strong> (InDesign, Illustrator, Photoshop) to eliminate manual handoffs between creative tools and production pipelines.</li>
-      <li>Developed <strong>reusable internal automation utilities</strong> (Word-to-Excel extractor, SVG QR code generator) — reducing recurring ad-hoc scripting requests and standardising outputs across teams.</li>
-      <li>Leveraged <strong>AI-assisted automation and prompt engineering</strong> to accelerate solution prototyping, documentation, and client-facing requirement refinement cycles.</li>
-      <li>Evaluated and presented <strong>RPA opportunities using Automation Anywhere</strong> — assessing feasibility, ROI, and implementation approach for broader business process automation.</li>
-      <li>Maintained <strong>Confluence-based process documentation</strong> and improvement logs — enabling knowledge transfer, governance, and continuous optimisation across automation initiatives.</li>
+      <li>Developed <strong>reusable internal automation utilities</strong> — Word-to-Excel extractor and SVG QR code generator — reducing recurring ad-hoc scripting requests across teams.</li>
+      <li>Leveraged <strong>AI-assisted automation and prompt engineering</strong> to accelerate solution prototyping, documentation, and requirement refinement cycles.</li>
+      <li>Evaluated and presented <strong>RPA opportunities via Automation Anywhere</strong> — assessing feasibility, ROI, and implementation approach for broader process automation.</li>
+      <li>Maintained <strong>Confluence-based process documentation</strong> and improvement logs — enabling knowledge transfer, governance, and continuous optimisation.</li>
     </ul>
+
+    <!-- AutoRequest Pro highlight -->
+    <div class="project-highlight">
+      <div class="project-highlight-title">
+        ⚡ AutoRequest Pro — AI-Powered Automation Request Platform
+        <span class="project-badge">✅ Live in Production</span>
+      </div>
+      <ul>
+        <li>Designed and delivered a production-grade internal platform enabling teams to submit, track, and prioritise automation requests via a structured 3-step wizard with auto-calculated ROI and smart priority recommendation.</li>
+        <li>Built a <strong>custom Power Automate connector</strong> (AutoMessage) integrating <strong>LLaMA 3 via Groq API</strong> — generating contextual AI email acknowledgements using chain-of-thought prompting and SharePoint as memory.</li>
+        <li>Implemented a <strong>collaborative brainstorming space</strong> — idea submission, voting, categorisation, and contributor tracking — driving cross-team engagement on automation opportunities.</li>
+        <li>Roadmap includes <strong>approval workflows, AI-driven ticket debriefing, JIRA integration</strong>, and automated SharePoint asset sync — currently in active development.</li>
+      </ul>
+      <div class="project-tags">
+        <span class="project-tag">Power Apps Canvas</span>
+        <span class="project-tag">Power Automate</span>
+        <span class="project-tag">LLaMA 3 · Groq API</span>
+        <span class="project-tag">Custom Connector</span>
+        <span class="project-tag">SharePoint</span>
+        <span class="project-tag">Chain-of-Thought</span>
+        <span class="project-tag">JIRA (Planned)</span>
+      </div>
+    </div>
+
+    <!-- Agentic AI highlight -->
+    <div class="project-highlight">
+      <div class="project-highlight-title">
+        🤖 Agentic AI Orchestration System
+        <span class="project-badge">✅ Workshop · Live App</span>
+      </div>
+      <ul>
+        <li>Designed and built a <strong>multi-agent AI orchestration pipeline</strong> as part of an Agentic AI workshop — implementing a ReAct (Reason-Act-Observe) loop with multi-step planning, tool selection, and session memory.</li>
+        <li>Used <strong>Streamlit</strong> as the web interface and <strong>GitHub Actions</strong> for CI/CD orchestration — deployed as a live public app.</li>
+      </ul>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Streamlit</span>
+        <span class="project-tag">GitHub Actions</span>
+        <span class="project-tag">ReAct Pattern</span>
+        <span class="project-tag">Agent Orchestration</span>
+        <span class="project-tag">LLM Tool Use</span>
+      </div>
+    </div>
   </div>
 
   <!-- Job 2 -->
@@ -317,12 +410,12 @@
       </div>
     </div>
     <ul>
-      <li>Analysed localisation and creative adaptation workflows and delivered <strong>metadata-driven automation solutions</strong> using Python, AppleScript, and JavaScript — eliminating repetitive manual processes across production teams.</li>
-      <li>Identified documentation inefficiencies and built <strong>automated data transformation pipelines</strong> for Word→Excel and Excel→Excel conversions, establishing repeatable, scalable patterns for reporting workflows.</li>
-      <li>Assessed version control and compliance pain points and implemented <strong>file management automation</strong> — bulk renaming, folder structuring, and metadata tagging — ensuring audit-ready outputs consistently.</li>
-      <li>Designed and deployed early <strong>Enfocus Switch automation flows</strong> for file validation, job-ticket matching, and conditional asset routing — the foundation for later enterprise-scale automation systems.</li>
-      <li>Recommended and built <strong>Adobe scripting integrations</strong> (InDesign, Photoshop, Illustrator) to bridge creative tooling with automated production workflows, improving adaptation speed and quality.</li>
-      <li>Recognised for <strong>cross-functional consulting approach</strong> — proactively identifying improvement opportunities across teams and delivering solutions that enabled enterprise-scale automation growth.</li>
+      <li>Analysed localisation and creative adaptation workflows and delivered <strong>metadata-driven automation solutions</strong> using Python, AppleScript, and JavaScript — eliminating repetitive manual processes.</li>
+      <li>Built <strong>automated data transformation pipelines</strong> for Word→Excel and Excel→Excel conversions, establishing repeatable, scalable patterns for documentation and reporting.</li>
+      <li>Implemented <strong>file management automation</strong> — bulk renaming, folder structuring, and metadata tagging — ensuring version control and audit-ready outputs consistently.</li>
+      <li>Designed foundational <strong>Enfocus Switch workflow architectures</strong> for file validation, job-ticket matching, and conditional asset routing — the basis for later enterprise-scale systems.</li>
+      <li>Recommended and built <strong>Adobe scripting integrations</strong> (InDesign, Photoshop, Illustrator) bridging creative tooling with automated production workflows.</li>
+      <li>Recognised for <strong>cross-functional consulting approach</strong> — proactively identifying improvement opportunities and delivering solutions that enabled enterprise-scale automation growth.</li>
     </ul>
   </div>
 
@@ -339,17 +432,15 @@
       </div>
     </div>
     <ul>
-      <li>Analyzed publishing workflow inefficiencies using data analysis, driving process improvements that ensured <strong>consistent on-time delivery</strong> and elevated content accuracy.</li>
-      <li>Automated <strong>KPI dashboards and performance reports using Excel macros</strong>, reducing reporting cycle time by <strong>50%</strong> and increasing team transparency. <span class="impact">50% faster reporting</span></li>
-      <li>Drove <strong>CAPA initiatives</strong> (Corrective and Preventive Actions) — identifying root causes, proposing solutions, and reducing client escalations.</li>
-      <li>Partnered with stakeholders to continuously refine QA processes and align with quality standards and business objectives.</li>
+      <li>Identified publishing workflow inefficiencies through data analysis — driving process improvements that ensured consistent on-time delivery and elevated content accuracy.</li>
+      <li>Automated <strong>KPI dashboards and performance reports using Excel macros</strong> — reducing reporting cycle time by <strong>50%</strong> and increasing team performance transparency. <span class="impact">50% faster</span></li>
+      <li>Led <strong>CAPA initiatives</strong> — identifying root causes, proposing corrective actions, and reducing client escalations through structured problem-solving.</li>
+      <li>Partnered with stakeholders to continuously refine QA processes and align delivery with quality standards and business objectives.</li>
     </ul>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     SKILLS
-════════════════════════════════════ -->
+<!-- ════ SKILLS ════ -->
 <section>
   <div class="section-title">Skills &amp; Technologies</div>
   <div class="skills-grid">
@@ -377,11 +468,14 @@
     </div>
 
     <div class="skill-group">
-      <h4>Adobe &amp; Creative Tools</h4>
+      <h4>AI &amp; Agentic Systems</h4>
       <div class="tags">
-        <span class="tag">InDesign Scripting</span>
-        <span class="tag">Photoshop Scripting</span>
-        <span class="tag">Illustrator Scripting</span>
+        <span class="tag">LLaMA 3 · Groq</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">Chain-of-Thought</span>
+        <span class="tag">ReAct Pattern</span>
+        <span class="tag">Agentic AI</span>
+        <span class="tag">Streamlit</span>
       </div>
     </div>
 
@@ -392,18 +486,7 @@
         <span class="tag">Power Automate</span>
         <span class="tag">SharePoint</span>
         <span class="tag">Canvas Apps</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <h4>AI &amp; Agentic Systems</h4>
-      <div class="tags">
-        <span class="tag">LLaMA 3.8B</span>
-        <span class="tag">Prompt Engineering</span>
-        <span class="tag">Chain-of-Thought</span>
-        <span class="tag">Agentic AI</span>
-        <span class="tag">ReAct Pattern</span>
-        <span class="tag">Streamlit</span>
+        <span class="tag">Custom Connectors</span>
       </div>
     </div>
 
@@ -411,11 +494,10 @@
       <h4>Consulting &amp; Delivery</h4>
       <div class="tags">
         <span class="tag">Process Assessment</span>
-        <span class="tag">Requirements Gathering</span>
-        <span class="tag">Gap Analysis</span>
         <span class="tag">Solution Design</span>
+        <span class="tag">Gap Analysis</span>
+        <span class="tag">Requirements Gathering</span>
         <span class="tag">Stakeholder Management</span>
-        <span class="tag">ROI Analysis</span>
       </div>
     </div>
 
@@ -425,22 +507,25 @@
         <span class="tag">JIRA</span>
         <span class="tag">Confluence</span>
         <span class="tag">Agile/Scrum</span>
-        <span class="tag">Backlog Prioritization</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">Backlog Prioritisation</span>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     CERTIFICATIONS
-════════════════════════════════════ -->
+<!-- ════ CERTIFICATIONS ════ -->
 <section>
   <div class="section-title">Certifications</div>
 
   <div class="cert-row">
     <div>
-      <div class="cert-name">Essential Automation Anywhere Certification</div>
+      <div class="cert-name">
+        <a href="https://certificates.automationanywhere.com/6fa54423-1dc8-4388-9a3f-8c68b75ed447#acc.SLeC8Upx" target="_blank" style="color:var(--text); text-decoration:none;">
+          Essential Automation Anywhere Certification ↗
+        </a>
+      </div>
       <span class="cert-issuer">Automation Anywhere</span>
     </div>
     <div class="cert-date">May 2025</div>
@@ -448,7 +533,11 @@
 
   <div class="cert-row">
     <div>
-      <div class="cert-name">Business Analyst Badge</div>
+      <div class="cert-name">
+        <a href="https://certificates.automationanywhere.com/0dd46f88-5c8e-486c-8e31-5b27890a576b#acc.epcOzvP4" target="_blank" style="color:var(--text); text-decoration:none;">
+          Business Analyst Badge ↗
+        </a>
+      </div>
       <span class="cert-issuer">Automation Anywhere</span>
     </div>
     <div class="cert-date">Apr 2025</div>
@@ -456,21 +545,23 @@
 
   <div class="cert-row">
     <div>
-      <div class="cert-name">Google Project Management Certificate</div>
+      <div class="cert-name">
+        <a href="https://www.coursera.org/account/accomplishments/professional-cert/HVBHYVZ4Y83R" target="_blank" style="color:var(--text); text-decoration:none;">
+          Google Project Management Certificate ↗
+        </a>
+      </div>
       <span class="cert-issuer">Google · Coursera</span>
     </div>
     <div class="cert-date">Mar 2023</div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     EDUCATION
-════════════════════════════════════ -->
+<!-- ════ EDUCATION ════ -->
 <section>
   <div class="section-title">Education</div>
   <div class="edu-row">
     <div>
-      <div class="deg">Bachelor of Technology – Computer Science</div>
+      <div class="deg">Bachelor of Technology — Computer Science</div>
       <div class="school">Adams Engineering College</div>
     </div>
     <div class="cert-date">June 2016</div>
